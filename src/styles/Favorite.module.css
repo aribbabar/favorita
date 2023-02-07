@@ -1,0 +1,39 @@
+.favoriteContainer {
+  margin: 1rem;
+  padding: 1rem;
+  width: 300px;
+  display: grid;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  border-radius: 12px;
+}
+
+.favoriteContainer img {
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  height: 250px;
+}
+
+.dynoImage {
+  margin-bottom: 0.5rem;
+  background-color: #000;
+  color: #fff;
+  font-size: 48px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.editDeletContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 12px;
+  text-align: center;
+}
+
+.editContainer *,
+.deleteContainer * {
+  cursor: pointer;
+}
