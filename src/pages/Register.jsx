@@ -4,15 +4,17 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import styles from "../styles/login.module.css";
+import styles from "../styles/Register.module.css";
 import { doc, setDoc } from "firebase/firestore";
 
 function LoginAndRegister() {
-  const [firstName, setFirstName] = useState("John");
-  const [lastName, setLastName] = useState("Doe");
-  const [email, setEmail] = useState("johndoe@gmail.com");
-  const [password, setPassword] = useState("helloworld");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,24 +25,31 @@ function LoginAndRegister() {
   function handleSubmit(e) {
     e.preventDefault();
 
+    setError("");
+    setLoading(true);
+
     // client-side validation
     if (!firstName) {
       setError("Please enter your first name");
+      setLoading(false);
       return;
     }
 
     if (!lastName) {
       setError("Please enter your last name");
+      setLoading(false);
       return;
     }
 
     if (!email) {
       setError("Please fill in an email");
+      setLoading(false);
       return;
     }
 
     if (!password) {
       setError("Please fill in a password");
+      setLoading(false);
       return;
     }
 
@@ -68,12 +77,25 @@ function LoginAndRegister() {
         const errorCode = error.code;
         const errorMessage = error.message;
 
+        if (errorCode === "auth/admin-restricted-operation") {
+          setError(
+            "Sorry, but you can not register. Please contact admin for a new account"
+          );
+        } else {
+          setError("Oops... Something went wrong! Please try again later.");
+        }
+
         console.log(errorCode, errorMessage);
       });
   }
 
   return (
     <div className={styles.container}>
+      <h2>
+        Due to the developer (me) being on the spark plan of firebase, and just
+        generally being poor, new sign-ups are not allowed. Please contact me
+        for a new account if you want to mess around with this app.
+      </h2>
       <form className={styles.form}>
         <input
           type="text"
@@ -115,8 +137,16 @@ function LoginAndRegister() {
             setError("");
           }}
         />
-        <input type="submit" value="Register" onClick={handleSubmit} />
+        <input
+          type="submit"
+          value="Register"
+          disabled={loading}
+          onClick={handleSubmit}
+        />
       </form>
+      <div className="loadingBallContainer">
+        {loading && <div className="loadingBall"></div>}
+      </div>
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );

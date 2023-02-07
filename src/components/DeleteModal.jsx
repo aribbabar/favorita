@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 // firebase
 import { db, storage } from "../firebaseConfig";
@@ -11,6 +11,7 @@ import { UserContext } from "../routes/root";
 import styles from "../styles/DeleteModal.module.css";
 
 function ConfirmationModal({ favorite, setConfirmationModal }) {
+  const [loading, setLoading] = useState(false);
   const { user, dispatch } = useContext(UserContext);
 
   async function deleteFavorite() {
@@ -18,14 +19,18 @@ function ConfirmationModal({ favorite, setConfirmationModal }) {
       await deleteDoc(doc(db, "users", user.uid, "favorites", favorite.id));
       console.log("document from firestore deleted successfully");
 
-      await deleteObject(ref(storage, favorite.image.path));
-      console.log("image from storage deleted successfully");
+      if (favorite.image.path) {
+        await deleteObject(ref(storage, favorite.image.path));
+        console.log("image from storage deleted successfully");
+      }
     } catch (err) {
       console.log(err);
     }
 
-    setConfirmationModal(false);
     dispatch({ type: "REMOVE_FAVORITE", id: favorite.id });
+
+    setLoading(false);
+    setConfirmationModal(false);
   }
 
   return (
@@ -33,18 +38,18 @@ function ConfirmationModal({ favorite, setConfirmationModal }) {
       <div className={styles.underlay}></div>
       <div className={styles.confirmationModalContainer}>
         <p>Are you sure?</p>
-        <span
-          className={`${styles.icon} material-icons`}
-          onClick={deleteFavorite}
+        <button
+          disabled={loading}
+          onClick={() => {
+            setLoading(true);
+            deleteFavorite();
+          }}
         >
-          done
-        </span>
-        <span
-          className={`${styles.icon} material-icons`}
-          onClick={() => setConfirmationModal(false)}
-        >
-          close
-        </span>
+          <span className="material-icons">done</span>
+        </button>
+        <button onClick={() => setConfirmationModal(false)}>
+          <span className="material-icons">close</span>
+        </button>
       </div>
     </>
   );

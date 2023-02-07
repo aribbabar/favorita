@@ -8,6 +8,11 @@
   cursor: default;
 }
 
+:root {
+  --primary-color: rgb(20, 20, 20);
+  --secondary-color: #fff;
+}
+
 img {
   max-width: 100%;
   object-fit: cover;
@@ -34,8 +39,48 @@ button {
   border: 0;
   font-size: 1em;
   cursor: pointer;
+  border-radius: 12px;
 }
 
 .material-icons {
   cursor: pointer;
+}
+
+*:disabled {
+  background-color: dimgray;
+  color: linen;
+  opacity: 1;
+}
+
+.loadingBallContainer {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 1rem;
+  margin-bottom: 20px;
+}
+
+.loadingBall {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  animation: bounce 0.5s;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
+  animation-iteration-count: infinite;
+}
+
+form input[type="submit"] {
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 50px, 0);
+  }
 }

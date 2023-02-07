@@ -14,7 +14,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  background-color: #000;
+  background-color: var(--primary-color);
   color: #fff;
   padding: 3rem;
   border-radius: 12px;
@@ -27,11 +27,4 @@
 
 .confirmationModalContainer p {
   grid-column: span 2;
-}
-
-.icon {
-  background-color: #fff;
-  color: #000;
-  border-radius: 12px;
-  cursor: pointer;
 }

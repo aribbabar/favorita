@@ -19,24 +19,30 @@ function EditModal({ favorite, setEditModal }) {
   const [imageFile, setImageFile] = useState("");
   const [error, setError] = useState("");
 
+  const [loading, setLoading] = useState();
+
   const { user, dispatch } = useContext(UserContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     // client-side validation
     if (!title) {
       setError("Please enter a title");
+      setLoading(false);
       return;
     }
 
     if (!rating) {
       setError("Please enter a rating");
+      setLoading(false);
       return;
     }
 
     if (!type || type === "Type") {
       setError("Please select a type");
+      setLoading(false);
       return;
     }
 
@@ -44,7 +50,8 @@ function EditModal({ favorite, setEditModal }) {
 
     let imageRef = "";
 
-    if (imageFile) {
+    // if the user selects a new image
+    if (imageFile && imageFile.name !== favorite.image.title) {
       const trimmedTitle = title.replace(/ /g, "");
 
       let imageStorageRef = "";
@@ -57,9 +64,10 @@ function EditModal({ favorite, setEditModal }) {
       imageRef = await uploadBytes(imageStorageRef, imageFile);
     }
 
+    // if the user selected a new image, change image, otherwise keep the old image
     const image = {
-      title: imageFile ? imageFile.name : "",
-      path: imageRef ? imageRef.metadata.fullPath : ""
+      title: imageFile ? imageFile.name : favorite.image.title,
+      path: imageRef ? imageRef.metadata.fullPath : favorite.image.path
     };
 
     await updateDoc(favoriteRef, {
@@ -83,6 +91,8 @@ function EditModal({ favorite, setEditModal }) {
       }
     });
 
+    setLoading(false);
+
     // close edit modal
     setEditModal(false);
   }
@@ -102,20 +112,25 @@ function EditModal({ favorite, setEditModal }) {
             type="text"
             placeholder="Title"
             value={title}
-            required
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setError("");
+            }}
           />
           <input
             type="number"
             placeholder="Rating"
             value={rating}
-            required
-            onChange={(e) => setRating(e.target.value)}
+            onChange={(e) => {
+              setRating(e.target.value);
+              setError("");
+            }}
           />
           <select
             value={type}
             onChange={(e) => {
               setType(e.target.value);
+              setError("");
             }}
           >
             <option value="Type">-- Select a type --</option>
@@ -130,7 +145,6 @@ function EditModal({ favorite, setEditModal }) {
           <input
             id="img-upload"
             type="file"
-            required
             onChange={(e) => {
               setImageFile(e.target.files[0]);
             }}
@@ -140,8 +154,11 @@ function EditModal({ favorite, setEditModal }) {
             readOnly
             value={imageFile?.name || favorite.image.title}
           />
-          <input type="submit" onClick={handleSubmit} />
+          <input type="submit" disabled={loading} onClick={handleSubmit} />
         </form>
+        <div className="loadingBallContainer">
+          {loading && <div className="loadingBall"></div>}
+        </div>
         {error && <p className={styles.error}>{error}</p>}
       </div>
     </>
