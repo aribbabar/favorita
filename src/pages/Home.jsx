@@ -14,13 +14,13 @@ function Home() {
   const { user, dispatch } = useContext(UserContext);
 
   return (
-    <div>
+    <>
       <div className={styles.favoritesContainer}>
         {user?.favorites.map((favorite) => (
           <Favorite key={favorite.id} favorite={favorite} />
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

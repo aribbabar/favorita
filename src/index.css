@@ -35,3 +35,7 @@ button {
   font-size: 1em;
   cursor: pointer;
 }
+
+.material-icons {
+  cursor: pointer;
+}

@@ -14,7 +14,10 @@ import styles from "../styles/root.module.css";
 import NavMenu from "../components/NavMenu";
 import { collection, getDocs } from "firebase/firestore";
 
-export const UserContext = createContext({});
+export const UserContext = createContext({
+  uid: "",
+  favorites: []
+});
 
 function userReducer(state, action) {
   switch (action.type) {
@@ -24,19 +27,37 @@ function userReducer(state, action) {
         favorites: state.favorites
       };
     case "ADD_FAVORITE":
-      console.log(state, action);
       return {
         uid: state.uid,
         favorites: [
           ...state.favorites,
           {
-            id: action.id,
+            id: action.favoriteId,
             title: action.favorite.title,
-            type: action.favorite.type,
             rating: action.favorite.rating,
-            imageRef: action.favorite.imageRef
+            type: action.favorite.type,
+            image: action.favorite.image
           }
         ]
+      };
+    case "UPDATE_FAVORITE":
+      return {
+        uid: state.uid,
+        favorites: [
+          ...state.favorites.filter((fav) => fav.id !== action.favorite.id),
+          {
+            id: action.favorite.id,
+            title: action.favorite.title,
+            rating: action.favorite.rating,
+            type: action.favorite.type,
+            image: action.favorite.image
+          }
+        ]
+      };
+    case "REMOVE_FAVORITE":
+      return {
+        uid: state.uid,
+        favorites: state.favorites.filter((fav) => fav.id !== action.id)
       };
     case "SIGN_OUT":
       return {
@@ -70,15 +91,20 @@ function Root() {
         dispatch({ type: "SET_UID", uid });
 
         async function getFavorites() {
+          console.log("new request for all docs");
+
           const docsRef = collection(db, "users", uid, "favorites");
           const docsSnap = await getDocs(docsRef);
-
-          console.log("new request for all docs");
 
           docsSnap.forEach((doc) => {
             const data = doc.data();
 
-            dispatch({ type: "ADD_FAVORITE", uid, id: doc.id, favorite: data });
+            dispatch({
+              type: "ADD_FAVORITE",
+              uid,
+              favoriteId: doc.id,
+              favorite: data
+            });
           });
         }
 

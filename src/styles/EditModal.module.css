@@ -1,0 +1,78 @@
+.underlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 20%);
+  z-index: 1;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #000;
+  color: #fff;
+  width: 80vw;
+  height: 80vh;
+  margin: 1rem auto;
+  text-align: center;
+  padding: 1rem;
+  font-weight: normal;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 500px;
+  z-index: 2;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+}
+
+form > * {
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+form input[type="submit"] {
+  background-color: #fff;
+  color: #000;
+}
+
+form select option[value="Type"] {
+  text-align: center;
+}
+
+form input[type="file"] {
+  display: none;
+}
+
+form .customUploadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+form .customUploadBtn * {
+  cursor: pointer;
+}
+
+.error {
+  color: rgb(240, 40, 40);
+  margin-top: 1rem;
+}

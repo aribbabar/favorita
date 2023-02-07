@@ -1,18 +1,23 @@
+// react
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+// firebase
 import { db, storage } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
-
-import styles from "../styles/CreateFavorite.module.css";
-import { UserContext } from "../routes/root";
 import { ref, uploadBytes } from "firebase/storage";
-import { useNavigate } from "react-router-dom";
+
+// styles
+import styles from "../styles/CreateFavorite.module.css";
+
+// contexts
+import { UserContext } from "../routes/root";
 
 function CreateFavorite() {
   const [title, setTitle] = useState("The Last of Us");
   const [rating, setRating] = useState("10");
-  const [type, setType] = useState("");
-  const [image, setImage] = useState("");
+  const [type, setType] = useState("Game");
+  const [imageFile, setImageFile] = useState("");
   const [error, setError] = useState("");
 
   const { user, dispatch } = useContext(UserContext);
@@ -45,37 +50,42 @@ function CreateFavorite() {
       let imageStorageRef = "";
       let imageRef = null;
 
-      if (image) {
+      if (imageFile) {
         imageStorageRef = ref(
           storage,
-          `${user.uid}/images/${trimmedTitle}/${image.name}`
+          `${user.uid}/images/${trimmedTitle}/${imageFile.name}`
         );
 
-        imageRef = await uploadBytes(imageStorageRef, image);
+        imageRef = await uploadBytes(imageStorageRef, imageFile);
       }
+
+      const image = {
+        title: imageFile ? imageFile.name : "",
+        path: imageRef ? imageRef.metadata.fullPath : ""
+      };
 
       // only add an image if one was provided by the user
       const docRef = await addDoc(
         collection(db, "users", user.uid, "favorites"),
         {
-          title,
-          type,
-          rating,
-          imageRef: imageRef ? imageRef.metadata.fullPath : ""
+          title: title,
+          type: type,
+          rating: rating,
+          image: image
         }
       );
 
       console.log("Document written with ID: ", docRef.id);
 
       // update global state
-      // only add an image if one was provided by the user
       dispatch({
         type: "ADD_FAVORITE",
-        id: docRef.id,
+        favoriteId: docRef.id,
         favorite: {
-          title,
-          rating,
-          imageRef: imageRef ? imageRef.metadata.fullPath : ""
+          title: title,
+          type: type,
+          rating: rating,
+          image: image
         }
       });
 
@@ -122,11 +132,11 @@ function CreateFavorite() {
           type="file"
           required
           onChange={(e) => {
-            setImage(e.target.files[0]);
+            setImageFile(e.target.files[0]);
             console.log(e.target.files[0]);
           }}
         />
-        <input type="text" readOnly value={image?.name || ""} />
+        <input type="text" readOnly value={imageFile?.name || ""} />
         <input type="submit" onClick={handleSubmit} />
       </form>
       {error && <p className={styles.error}>{error}</p>}
