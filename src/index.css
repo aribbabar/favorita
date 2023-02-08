@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
   cursor: default;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 *,
@@ -16,7 +17,7 @@
 
 :root {
   /* colors */
-  --primary-color: rgb(25, 25, 25);
+  --primary-color: rgb(30, 30, 30);
   --secondary-color: #fff;
   --error-color: #ed4337;
 

@@ -4,14 +4,19 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(0, 0, 0, 20%);
+  background-color: rgb(0, 0, 0, 50%);
   z-index: 1;
 }
 
-.closeIcon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.closeBtn {
+  width: min-content;
+  margin-left: auto;
+  background-color: var(--primary-color-v);
+  padding-bottom: 1rem;
+}
+
+.closeBtn span {
+  color: var(--secondary-color-v);
 }
 
 .container {
@@ -22,8 +27,6 @@
   background-color: var(--primary-color-v);
   color: var(--secondary-color-v);
   width: 80vw;
-  min-height: 80vh;
-  margin: 1rem auto;
   text-align: center;
   padding: 1rem;
   font-weight: normal;
@@ -70,6 +73,10 @@ form .customUploadBtn {
 
 form .customUploadBtn * {
   cursor: pointer;
+}
+
+form .submitBtn {
+  background-color: var(--secondary-color-v);
 }
 
 .error {

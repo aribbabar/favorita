@@ -165,26 +165,26 @@ function Root() {
       )}
       <div className={styles.container}>
         <span
-          className={`${styles.hamburger} material-icons`}
+          className={`${styles.menuIcon} material-icons`}
           onClick={flipModal}
         >
           menu
         </span>
+        <h1 className={styles.heading} onClick={() => navigate("/")}>
+          Favorita
+        </h1>
         <span
-          className={`${styles.colorModeIcon} material-icons`}
+          className={`${styles.themeIcon} material-icons`}
           onClick={flipTheme}
         >
           light_mode
         </span>
-        <h1 className={styles.heading} onClick={() => navigate("/")}>
-          Favorita
-        </h1>
-        <main>
-          <UserContext.Provider value={{ user, dispatch }}>
-            <Outlet />
-          </UserContext.Provider>
-        </main>
       </div>
+      <main>
+        <UserContext.Provider value={{ user, dispatch }}>
+          <Outlet />
+        </UserContext.Provider>
+      </main>
     </>
   );
 }

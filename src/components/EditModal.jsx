@@ -99,14 +99,16 @@ function EditModal({ favorite, setEditModal }) {
 
   return (
     <>
-      <div className={styles.underlay}></div>
+      <div
+        className={styles.underlay}
+        onClick={() => {
+          setEditModal(false);
+        }}
+      ></div>
       <div className={styles.container}>
-        <span
-          className={`${styles.closeIcon} material-icons`}
-          onClick={() => setEditModal(false)}
-        >
-          close
-        </span>
+        <button className={styles.closeBtn} onClick={() => setEditModal(false)}>
+          <span className="material-icons">close</span>
+        </button>
         <form>
           <input
             type="text"
@@ -154,7 +156,14 @@ function EditModal({ favorite, setEditModal }) {
             readOnly
             value={imageFile?.name || favorite.image.title}
           />
-          <input type="submit" disabled={loading} onClick={handleSubmit} />
+          <button
+            className={styles.submitBtn}
+            type="submit"
+            disabled={loading}
+            onClick={handleSubmit}
+          >
+            <span class="material-icons">done</span>
+          </button>
         </form>
         <div className="loadingBallContainer">
           {loading && <div className="loadingBall"></div>}
