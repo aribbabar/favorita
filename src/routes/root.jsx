@@ -1,7 +1,7 @@
 // react
 import { useEffect, useState, createContext, useReducer } from "react";
 import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // firebase
 import { auth, db } from "../firebaseConfig";
@@ -133,8 +133,6 @@ function Root() {
 
   function flipModal() {
     setModal(!modal);
-
-    console.log("modal switched");
   }
 
   function flipTheme() {
@@ -149,8 +147,6 @@ function Root() {
     }
 
     document.querySelector(":root").setAttribute("color-scheme", theme);
-
-    console.log(theme);
   }
 
   return (
@@ -170,8 +166,8 @@ function Root() {
         >
           menu
         </span>
-        <h1 className={styles.heading} onClick={() => navigate("/")}>
-          Favorita
+        <h1 className={styles.heading}>
+          <Link to={"/"}>Favorita</Link>
         </h1>
         <span
           className={`${styles.themeIcon} material-icons`}

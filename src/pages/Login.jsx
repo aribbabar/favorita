@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "../styles/Login.module.css";
 
-function LoginAndRegister({ type }) {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -49,6 +49,7 @@ function LoginAndRegister({ type }) {
         const errorMessage = error.message;
 
         setError("Email or password is incorrect");
+        setLoading(false);
 
         console.log(errorCode, errorMessage);
       });
@@ -68,7 +69,7 @@ function LoginAndRegister({ type }) {
           }}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           value={password}
           required
@@ -79,17 +80,17 @@ function LoginAndRegister({ type }) {
         />
         <input
           type="submit"
-          value={type}
+          value="Sign in"
           disabled={loading}
           onClick={handleSubmit}
         />
       </form>
       <div className="loadingBallContainer">
-        {loading && <div className="loadingBall"></div>}
+        {loading && <div className="loadingBall secondary-color"></div>}
       </div>
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }
 
-export default LoginAndRegister;
+export default Login;

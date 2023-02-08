@@ -71,8 +71,8 @@ form .customUploadBtn {
   cursor: pointer;
 }
 
-form .customUploadBtn * {
-  cursor: pointer;
+form .customUploadBtn span {
+  color: var(--secondary-color-v);
 }
 
 form .submitBtn {

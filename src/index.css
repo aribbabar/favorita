@@ -109,7 +109,6 @@ button {
 }
 
 .loadingBallContainer {
-  width: 100%;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -121,7 +120,7 @@ button {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: var(--secondary-color-v);
   animation: bounce 0.5s;
   animation-direction: alternate;
   animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);

@@ -1,7 +1,6 @@
 .favoriteContainer {
   margin: 1rem;
   padding: 1rem;
-  width: 300px;
   display: grid;
   border: 2px solid var(--primary-color-v);
   border-radius: 12px;
@@ -10,7 +9,6 @@
 .favoriteContainer img {
   border-radius: 12px;
   margin-bottom: 0.5rem;
-  height: 250px;
 }
 
 .dynoImage {

@@ -50,7 +50,6 @@
   display: block;
   background-color: var(--secondary-color-v);
   color: var(--primary-color-v);
-  width: 100%;
   padding: 1rem;
   border-radius: 12px;
   text-align: center;
