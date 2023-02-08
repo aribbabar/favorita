@@ -3,7 +3,7 @@
   padding: 1rem;
   width: 300px;
   display: grid;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  border: 2px solid var(--primary-color-v);
   border-radius: 12px;
 }
 
@@ -15,8 +15,8 @@
 
 .dynoImage {
   margin-bottom: 0.5rem;
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: var(--primary-color-v);
+  color: var(--secondary-color-v);
   font-size: 48px;
   height: 250px;
   display: flex;

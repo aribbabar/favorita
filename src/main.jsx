@@ -17,10 +17,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateFavorite from "./pages/CreateFavorite";
 import Home from "./pages/Home";
+import Error from "./pages/Error";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Root />}>
+    <Route path="/" element={<Root />} errorElement={<Error />}>
       <Route path="/" element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />

@@ -8,9 +8,52 @@
   cursor: default;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 :root {
-  --primary-color: rgb(20, 20, 20);
+  /* colors */
+  --primary-color: rgb(25, 25, 25);
   --secondary-color: #fff;
+  --error-color: #ed4337;
+
+  /* variables */
+
+  --primary-color-v: var(--primary-color);
+  --secondary-color-v: var(--secondary-color);
+  --error-color-v: var(--error-color);
+}
+
+[color-scheme="DARK"] {
+  --primary-color-v: var(--primary-color);
+  --secondary-color-v: var(--secondary-color);
+  --error-color-v: var(--error-color);
+}
+
+[color-scheme="LIGHT"] {
+  --primary-color-v: var(--secondary-color);
+  --secondary-color-v: var(--primary-color);
+  --error-color-v: var(--error-color);
+}
+
+body {
+  background-color: var(--secondary-color-v);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color-v);
+}
+
+p {
+  color: var(--primary-color-v);
 }
 
 img {
@@ -27,12 +70,24 @@ a {
   cursor: pointer;
 }
 
+input {
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .material-icons {
   font-size: 2em;
+  color: var(--primary-color-v);
 }
 
 input {
   border: 0;
+  background-color: var(--secondary-color-v);
+  color: var(--primary-color-v);
+}
+
+input::placeholder {
+  color: var(--primary-color-v);
 }
 
 button {

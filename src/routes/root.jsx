@@ -72,6 +72,7 @@ function userReducer(state, action) {
 function Root() {
   const [modal, setModal] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
   const [user, dispatch] = useReducer(userReducer, {
     uid: "",
@@ -79,6 +80,16 @@ function Root() {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+
+    if (theme === "LIGHT") {
+      document.querySelector(":root").setAttribute("color-scheme", "LIGHT");
+    } else {
+      document.querySelector(":root").setAttribute("color-scheme", "DARK");
+    }
+  }, [theme]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (u) => {
@@ -126,6 +137,22 @@ function Root() {
     console.log("modal switched");
   }
 
+  function flipTheme() {
+    if (theme !== null) {
+      localStorage.setItem("theme", "LIGHT");
+    }
+
+    if (theme === "LIGHT") {
+      setTheme("DARK");
+    } else {
+      setTheme("LIGHT");
+    }
+
+    document.querySelector(":root").setAttribute("color-scheme", theme);
+
+    console.log(theme);
+  }
+
   return (
     <>
       {modal && (
@@ -142,6 +169,12 @@ function Root() {
           onClick={flipModal}
         >
           menu
+        </span>
+        <span
+          className={`${styles.colorModeIcon} material-icons`}
+          onClick={flipTheme}
+        >
+          light_mode
         </span>
         <h1 className={styles.heading} onClick={() => navigate("/")}>
           Favorita
