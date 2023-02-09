@@ -59,6 +59,30 @@ function userReducer(state, action) {
         uid: state.uid,
         favorites: state.favorites.filter((fav) => fav.id !== action.id)
       };
+    case "SORT_BY_GIVEN_PROPERTY":
+      function sortByPropertyAsc(arr, property) {
+        return arr.sort((a, b) => {
+          if (a[property] < b[property]) return -1;
+          if (a[property] > b[property]) return 1;
+          return 0;
+        });
+      }
+
+      function sortByPropertyDesc(arr, property) {
+        return arr.sort((a, b) => {
+          if (a[property] < b[property]) return 1;
+          if (a[property] > b[property]) return -1;
+          return 0;
+        });
+      }
+
+      return {
+        uid: state.uid,
+        favorites:
+          action.orderBy === "ASC"
+            ? sortByPropertyAsc(state.favorites, action.property)
+            : sortByPropertyDesc(state.favorites, action.property)
+      };
     case "SIGN_OUT":
       return {
         uid: "",
@@ -78,8 +102,6 @@ function Root() {
     uid: "",
     favorites: []
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem("theme", theme);

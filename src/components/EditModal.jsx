@@ -162,7 +162,7 @@ function EditModal({ favorite, setEditModal }) {
             disabled={loading}
             onClick={handleSubmit}
           >
-            <span class="material-icons">done</span>
+            <span className="material-icons">done</span>
           </button>
         </form>
         <div className="loadingBallContainer">
