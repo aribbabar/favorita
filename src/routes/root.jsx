@@ -1,7 +1,7 @@
 // react
 import { useEffect, useState, createContext, useReducer } from "react";
 import { Outlet } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // firebase
 import { auth, db } from "../firebaseConfig";
@@ -18,6 +18,22 @@ export const UserContext = createContext({
   uid: "",
   favorites: []
 });
+
+function sortByPropertyAsc(arr, property) {
+  return arr.sort((a, b) => {
+    if (a[property] < b[property]) return -1;
+    if (a[property] > b[property]) return 1;
+    return 0;
+  });
+}
+
+function sortByPropertyDesc(arr, property) {
+  return arr.sort((a, b) => {
+    if (a[property] < b[property]) return 1;
+    if (a[property] > b[property]) return -1;
+    return 0;
+  });
+}
 
 function userReducer(state, action) {
   switch (action.type) {
@@ -60,22 +76,6 @@ function userReducer(state, action) {
         favorites: state.favorites.filter((fav) => fav.id !== action.id)
       };
     case "SORT_BY_GIVEN_PROPERTY":
-      function sortByPropertyAsc(arr, property) {
-        return arr.sort((a, b) => {
-          if (a[property] < b[property]) return -1;
-          if (a[property] > b[property]) return 1;
-          return 0;
-        });
-      }
-
-      function sortByPropertyDesc(arr, property) {
-        return arr.sort((a, b) => {
-          if (a[property] < b[property]) return 1;
-          if (a[property] > b[property]) return -1;
-          return 0;
-        });
-      }
-
       return {
         uid: state.uid,
         favorites:
@@ -138,6 +138,13 @@ function Root() {
               favoriteId: doc.id,
               favorite: data
             });
+          });
+
+          // after adding all docs, sort alphebetically by title
+          dispatch({
+            type: "SORT_BY_GIVEN_PROPERTY",
+            property: "title",
+            orderBy: "ASC"
           });
         }
 

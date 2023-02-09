@@ -2,9 +2,15 @@
   margin: 1rem;
   padding: 1rem;
   display: grid;
-  border: 2px solid var(--primary-color-v);
+  background-color: var(--primary-color-v);
+  color: var(--secondary-color-v);
   border-radius: 12px;
   width: 200px;
+  gap: 0.2rem;
+}
+
+.favoriteContainer .title {
+  text-align: center;
 }
 
 .favoriteContainer img {
@@ -12,6 +18,12 @@
   margin-bottom: 0.5rem;
   height: 250px;
   width: 100%;
+  border: 1px solid var(--secondary-color-v);
+}
+
+.favoriteContainer * {
+  color: var(--secondary-color-v);
+  font-weight: normal;
 }
 
 .dynoImage {

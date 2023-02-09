@@ -1,23 +1,62 @@
-import { useState } from "react";
+// react
+import { useState, useContext, useEffect } from "react";
 
+// contexts
+import { UserContext } from "../routes/root";
+
+// styles
 import styles from "../styles/CustomSelect.module.css";
 
-function CustomSelect({ options, onChange }) {
+function CustomSelect() {
+  const { user, dispatch } = useContext(UserContext);
+
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   const [rotate, setRotate] = useState(false);
+  const [orderBy, setOrderBy] = useState("DESC");
 
-  const toggleDropdown = () => setOpen(!open);
+  const options = ["Alphabetical", "Rating"];
 
-  const handleOptionClick = (value) => {
+  function flipPrevOrderBy() {
+    setOrderBy((prev) => (prev === "ASC" ? "DESC" : "ASC"));
+  }
+
+  function optionChange(option) {
+    switch (option) {
+      case "Alphabetical":
+        dispatch({
+          type: "SORT_BY_GIVEN_PROPERTY",
+          property: "title",
+          orderBy: orderBy
+        });
+        flipPrevOrderBy();
+
+        break;
+      case "Rating":
+        dispatch({
+          type: "SORT_BY_GIVEN_PROPERTY",
+          property: "rating",
+          orderBy: orderBy
+        });
+        flipPrevOrderBy();
+
+        break;
+      default:
+        console.log("invalid option:", option);
+    }
+  }
+
+  function toggleDropdown() {
+    setOpen(!open);
+  }
+
+  function handleOptionClick(value) {
     setSelectedValue(value);
     setOpen(false);
     flipRotate();
 
-    if (onChange) {
-      onChange(value);
-    }
-  };
+    optionChange(value);
+  }
 
   function flipRotate() {
     setRotate(!rotate);

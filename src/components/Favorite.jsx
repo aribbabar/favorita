@@ -84,9 +84,10 @@ function Favorite({ favorite }) {
             <p>Delete</p>
           </div>
         </div>
-        <h2>{favorite.title}</h2>
-        <h3>Type: {favorite.type}</h3>
-        <h3>Rating: {favorite.rating}</h3>
+        <h4 className={styles.title}>{favorite.title}</h4>
+        <div className="line-break"></div>
+        <h4>Type: {favorite.type}</h4>
+        <h4>Rating: {favorite.rating}</h4>
       </div>
     </>
   );

@@ -10,7 +10,7 @@
   grid-template-columns: 1fr min-content;
   background-color: var(--primary-color-v);
   color: var(--secondary-color-v);
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid var(--secondary-color-v);
 }
 
@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 0;
   border-bottom: 1px solid var(--secondary-color-v);
 }
