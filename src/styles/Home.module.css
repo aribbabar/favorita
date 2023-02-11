@@ -15,4 +15,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.loginBtn {
+  display: block;
+  width: min-content;
+  margin: 0 auto;
+}
+
+.feelsEmptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }

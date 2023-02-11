@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // firebase
 import { db, storage } from "../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 
 // styles
@@ -79,11 +79,10 @@ function CreateFavorite() {
           title: title,
           type: type,
           rating: rating,
-          image: image
+          image: image,
+          createdAt: serverTimestamp()
         }
       );
-
-      console.log("Document written with ID: ", docRef.id);
 
       // update global state
       dispatch({
@@ -152,7 +151,12 @@ function CreateFavorite() {
           }}
         />
         <input type="text" readOnly value={imageFile?.name || ""} />
-        <input type="submit" disabled={loading} onClick={handleSubmit} />
+        <input
+          type="submit"
+          value="Add"
+          disabled={loading}
+          onClick={handleSubmit}
+        />
       </form>
       <div className={styles.loadingBallContainer}>
         {loading && <div className={styles.loadingBall}></div>}

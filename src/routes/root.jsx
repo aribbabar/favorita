@@ -140,7 +140,7 @@ function Root() {
             });
           });
 
-          // after adding all docs, sort alphebetically by title
+          // after adding all docs, sort alphabetically by title
           dispatch({
             type: "SORT_BY_GIVEN_PROPERTY",
             property: "title",
