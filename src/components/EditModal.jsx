@@ -3,11 +3,14 @@ import { useContext, useState } from "react";
 
 // firebase
 import { doc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
 import { db, storage } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";
+
+// hooks
+import { useUploadImage } from "../hooks/useUploadImage";
 
 // styles
 import styles from "../styles/EditModal.module.css";
@@ -16,11 +19,14 @@ function EditModal({ favorite, setEditModal }) {
   const [title, setTitle] = useState(favorite.title);
   const [rating, setRating] = useState(favorite.rating);
   const [type, setType] = useState(favorite.type);
-  const [imageFile, setImageFile] = useState("");
+  const [imageTitle, setImageTitle] = useState(favorite.image.title);
+  const [imageFile, setImageFile] = useState(undefined);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
 
   const { user, dispatch } = useContext(UserContext);
+
+  const { uploadImage } = useUploadImage();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -47,27 +53,37 @@ function EditModal({ favorite, setEditModal }) {
 
     const favoriteRef = doc(db, "users", user.uid, "favorites", favorite.id);
 
-    let imageRef = "";
+    let imageRef = undefined;
 
-    // if the user selects a new image
-    if (imageFile && imageFile.name !== favorite.image.title) {
-      const trimmedTitle = title.replace(/ /g, "");
-
-      let imageStorageRef = "";
-
-      imageStorageRef = ref(
-        storage,
-        `${user.uid}/images/${trimmedTitle}/${imageFile.name}`
-      );
-
-      imageRef = await uploadBytes(imageStorageRef, imageFile);
-    }
-
-    // if the user selected a new image, change image, otherwise keep the old image
     const image = {
-      title: imageFile ? imageFile.name : favorite.image.title,
-      path: imageRef ? imageRef.metadata.fullPath : favorite.image.path
+      title: favorite.image.title,
+      path: favorite.image.path
     };
+
+    // if the user changed the image at all
+    if (imageTitle !== favorite.image.title) {
+      if (imageTitle === "") {
+        // user removed the image
+        // delete image from storage if an image previously existed
+        if (favorite.image.title) {
+          await deleteObject(ref(storage, favorite.image.path));
+        }
+
+        image.title = "";
+        image.path = "";
+      } else if (imageTitle !== favorite.image.title) {
+        // user uploaded a new image
+        // delete image from storage if an image previously existed
+        if (favorite.image.title) {
+          await deleteObject(ref(storage, favorite.image.path));
+        }
+
+        imageRef = await uploadImage(title, imageFile);
+
+        image.title = imageTitle;
+        image.path = imageRef.metadata.fullPath;
+      }
+    }
 
     await updateDoc(favoriteRef, {
       title: title,
@@ -148,13 +164,15 @@ function EditModal({ favorite, setEditModal }) {
             type="file"
             onChange={(e) => {
               setImageFile(e.target.files[0]);
+              setImageTitle(e.target.files[0].name);
             }}
           />
-          <input
-            type="text"
-            readOnly
-            value={imageFile?.name || favorite.image.title}
-          />
+          <div className={styles.imageDetailsContainer}>
+            <input type="text" readOnly value={imageTitle} />
+            <span className="material-icons" onClick={() => setImageTitle("")}>
+              close
+            </span>
+          </div>
           <button
             className={styles.submitBtn}
             type="submit"

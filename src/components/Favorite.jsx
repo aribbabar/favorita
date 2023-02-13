@@ -21,6 +21,7 @@ function Favorite({ favorite }) {
   useEffect(() => {
     if (!favorite.image.path) {
       setRandomColor(generateRandomColor());
+      setImageURL("");
       return;
     }
 

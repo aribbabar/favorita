@@ -74,6 +74,22 @@ form .customUploadBtn span {
   color: var(--secondary-color-v);
 }
 
+.imageDetailsContainer {
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  gap: 1rem;
+}
+
+.imageDetailsContainer * {
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.imageDetailsContainer span {
+  background-color: var(--secondary-color-v);
+}
+
 form .submitBtn {
   background-color: var(--secondary-color-v);
 }

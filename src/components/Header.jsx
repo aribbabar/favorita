@@ -13,10 +13,9 @@ import styles from "../styles/Header.module.css";
 function Header() {
   const [modal, setModal] = useState(false);
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? "LIGHT" : "DARK"
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "LIGHT"
   );
 
-  // check if a theme was previously set
   useEffect(() => {
     localStorage.setItem("theme", theme);
 
@@ -37,8 +36,6 @@ function Header() {
     } else {
       setTheme("LIGHT");
     }
-
-    document.querySelector(":root").setAttribute("color-scheme", theme);
   }
 
   return (

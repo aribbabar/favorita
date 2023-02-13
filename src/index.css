@@ -27,7 +27,6 @@
   --error-color: #ed4337;
 
   /* variables */
-
   --primary-color-v: var(--primary-color);
   --secondary-color-v: var(--secondary-color);
   --error-color-v: var(--error-color);

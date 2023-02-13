@@ -75,7 +75,7 @@ function Home() {
           <Favorite key={favorite.id} favorite={favorite} />
         ))}
       </div>
-      {user.uid && user.lastVisibleDoc && (
+      {user.uid && user.favorites.length !== 0 && user.lastVisibleDoc && (
         <button className={`btn ${styles.loadMoreBtn}`} onClick={fetchMoreDocs}>
           Load More
         </button>

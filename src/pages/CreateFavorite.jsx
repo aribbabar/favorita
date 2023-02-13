@@ -25,7 +25,7 @@ function CreateFavorite() {
 
   const { user, dispatch } = useContext(UserContext);
 
-  const { uploadImage, uploadedImage } = useUploadImage();
+  const { uploadImage } = useUploadImage();
 
   const navigate = useNavigate();
 
