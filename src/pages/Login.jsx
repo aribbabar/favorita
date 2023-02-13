@@ -1,5 +1,5 @@
 // react
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // react router
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 // firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+
+// contexts
+import { UserContext } from "../contexts/UserContext";
 
 // styles
 import styles from "../styles/Login.module.css";
@@ -17,7 +20,14 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { user, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
+
+  // go back to home if logged in
+  if (user.uid) {
+    navigate("/");
+  }
 
   useEffect(() => {
     setError("");

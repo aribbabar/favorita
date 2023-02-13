@@ -1,5 +1,5 @@
 // react
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // react router
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
+
+// contexts
+import { UserContext } from "../contexts/UserContext";
 
 // styles
 import styles from "../styles/Register.module.css";
@@ -18,10 +21,16 @@ function LoginAndRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState(false);
 
+  const { user, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
+
+  // go back to home if logged in
+  if (user.uid) {
+    navigate("/");
+  }
 
   useEffect(() => {
     setError("");

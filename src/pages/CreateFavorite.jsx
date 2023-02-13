@@ -29,6 +29,11 @@ function CreateFavorite() {
 
   const navigate = useNavigate();
 
+  // go back to home if not logged in
+  if (!user.uid) {
+    navigate("/");
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
