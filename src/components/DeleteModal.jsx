@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 
 // firebase
-import { db, storage } from "../firebaseConfig";
 import { deleteDoc, doc } from "firebase/firestore";
-import { getStorage, ref, deleteObject } from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
+import { db, storage } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";
@@ -12,6 +12,7 @@ import styles from "../styles/DeleteModal.module.css";
 
 function ConfirmationModal({ favorite, setConfirmationModal }) {
   const [loading, setLoading] = useState(false);
+
   const { user, dispatch } = useContext(UserContext);
 
   async function deleteFavorite() {

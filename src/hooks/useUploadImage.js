@@ -1,9 +1,9 @@
 // react
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 // firebase
-import { storage } from "../firebaseConfig";
 import { ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";

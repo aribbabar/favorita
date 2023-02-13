@@ -1,12 +1,12 @@
 // react
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 
 // react router
 import { Link } from "react-router-dom";
 
 // firebase
-import { auth } from "../firebaseConfig";
 import { signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";

@@ -1,5 +1,5 @@
 // react
-import { useState, useContext, useEffect } from "react";
+import { useContext, useState } from "react";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";

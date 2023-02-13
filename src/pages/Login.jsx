@@ -1,12 +1,12 @@
 // react
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // react router
 import { useNavigate } from "react-router-dom";
 
 // firebase
-import { db, auth } from "../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";
@@ -15,8 +15,8 @@ import { UserContext } from "../contexts/UserContext";
 import styles from "../styles/Login.module.css";
 
 function Login() {
-  const [email, setEmail] = useState("johndoe@gmail.com");
-  const [password, setPassword] = useState("helloworld");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 

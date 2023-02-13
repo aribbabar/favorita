@@ -19,7 +19,8 @@ function userReducer(state, action) {
     case "SET_UID":
       return {
         uid: action.uid,
-        favorites: state.favorites
+        favorites: state.favorites,
+        lastVisibleDoc: state.lastVisibleDoc
       };
     case "ADD_FAVORITE":
       return {
@@ -33,7 +34,8 @@ function userReducer(state, action) {
             type: action.favorite.type,
             image: action.favorite.image
           }
-        ]
+        ],
+        lastVisibleDoc: state.lastVisibleDoc
       };
     case "UPDATE_FAVORITE":
       return {
@@ -47,12 +49,14 @@ function userReducer(state, action) {
             type: action.favorite.type,
             image: action.favorite.image
           }
-        ]
+        ],
+        lastVisibleDoc: state.lastVisibleDoc
       };
     case "REMOVE_FAVORITE":
       return {
         uid: state.uid,
-        favorites: state.favorites.filter((fav) => fav.id !== action.id)
+        favorites: state.favorites.filter((fav) => fav.id !== action.id),
+        lastVisibleDoc: state.lastVisibleDoc
       };
     case "SORT_BY_GIVEN_PROPERTY":
       return {
@@ -60,12 +64,20 @@ function userReducer(state, action) {
         favorites:
           action.orderBy === "ASC"
             ? sortByPropertyAsc(state.favorites, action.property)
-            : sortByPropertyDesc(state.favorites, action.property)
+            : sortByPropertyDesc(state.favorites, action.property),
+        lastVisibleDoc: state.lastVisibleDoc
+      };
+    case "UPDATE_LAST_VISIBLE_DOCUMENT":
+      return {
+        uid: state.uid,
+        favorites: state.favorites,
+        lastVisibleDoc: action.lastVisibleDoc
       };
     case "SIGN_OUT":
       return {
         uid: "",
-        favorites: []
+        favorites: [],
+        lastVisibleDoc: undefined
       };
     default:
       return state;

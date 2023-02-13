@@ -2,17 +2,14 @@
 import { createContext, useEffect, useReducer } from "react";
 
 // firebase
-import { auth, db } from "../firebaseConfig";
-import { collection, getDocs, limit, query, startAt } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
 
 // reducers
 import userReducer from "../reducers/UserReducer";
 
-export const UserContext = createContext({
-  uid: "",
-  favorites: []
-});
+export const UserContext = createContext();
 
 function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, {
@@ -31,31 +28,37 @@ function UserContextProvider({ children }) {
         dispatch({ type: "SET_UID", uid });
 
         async function getFavorites() {
-          // const q = query(
-          //   collection(db, "users", uid, "favorites"),
-          //   startAt(0),
-          //   limit(1)
-          // );
           const docsRef = collection(db, "users", uid, "favorites");
-          const docsSnap = await getDocs(docsRef);
 
-          docsSnap.forEach((doc) => {
+          const q = query(docsRef, orderBy("title"), limit(5));
+
+          const querySnapshot = await getDocs(q);
+
+          const lastVisibleDoc =
+            querySnapshot.docs[querySnapshot.docs.length - 1];
+
+          dispatch({
+            type: "UPDATE_LAST_VISIBLE_DOCUMENT",
+            lastVisibleDoc: lastVisibleDoc
+          });
+
+          querySnapshot.forEach((doc) => {
             const data = doc.data();
 
             dispatch({
               type: "ADD_FAVORITE",
-              uid,
+              uid: uid,
               favoriteId: doc.id,
               favorite: data
             });
           });
 
           // after adding all docs, sort alphabetically by title
-          dispatch({
-            type: "SORT_BY_GIVEN_PROPERTY",
-            property: "title",
-            orderBy: "ASC"
-          });
+          // dispatch({
+          //   type: "SORT_BY_GIVEN_PROPERTY",
+          //   property: "title",
+          //   orderBy: "ASC"
+          // });
         }
 
         getFavorites();

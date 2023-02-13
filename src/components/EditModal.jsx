@@ -1,10 +1,10 @@
 // react
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 
 // firebase
-import { db, storage } from "../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";
@@ -18,7 +18,6 @@ function EditModal({ favorite, setEditModal }) {
   const [type, setType] = useState(favorite.type);
   const [imageFile, setImageFile] = useState("");
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState();
 
   const { user, dispatch } = useContext(UserContext);

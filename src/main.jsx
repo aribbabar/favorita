@@ -1,5 +1,8 @@
+// react
 import React from "react";
 import ReactDOM from "react-dom/client";
+
+// global styles
 import "./index.css";
 
 import {
@@ -13,11 +16,11 @@ import {
 import Root from "./routes/root";
 
 // pages
+import CreateFavorite from "./pages/CreateFavorite";
+import Error from "./pages/Error";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import CreateFavorite from "./pages/CreateFavorite";
-import Home from "./pages/Home";
-import Error from "./pages/Error";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

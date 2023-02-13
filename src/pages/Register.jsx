@@ -1,11 +1,16 @@
-import { auth, db } from "../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
+// react
 import { useEffect, useState } from "react";
+
+// react router
 import { useNavigate } from "react-router-dom";
 
-import styles from "../styles/Register.module.css";
+//firebase
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
+
+// styles
+import styles from "../styles/Register.module.css";
 
 function LoginAndRegister() {
   const [firstName, setFirstName] = useState("");

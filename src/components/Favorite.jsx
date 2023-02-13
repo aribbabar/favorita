@@ -1,8 +1,9 @@
+// react
 import { useEffect, useState } from "react";
 
 // firebase
-import { storage } from "../firebaseConfig";
 import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../firebaseConfig";
 
 // styles
 import styles from "../styles/Favorite.module.css";

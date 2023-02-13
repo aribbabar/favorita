@@ -1,13 +1,19 @@
 // react
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 
 // react-router
 import { Link } from "react-router-dom";
 
 // firebase
-import { db, auth } from "../firebaseConfig";
-import { collection, getDocs, query, startAt } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter
+} from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";
@@ -16,14 +22,49 @@ import { UserContext } from "../contexts/UserContext";
 import Favorite from "../components/Favorite";
 
 // styles
-import styles from "../styles/Home.module.css";
 import CustomSelect from "../components/CustomSelect";
+import styles from "../styles/Home.module.css";
 
 function Home() {
   const { user, dispatch } = useContext(UserContext);
 
   function fetchMoreDocs() {
-    // const q = query(collection(db, "users", user.uid, "favorites"), startAt(user.currIndex));
+    if (user.lastVisibleDoc === undefined) {
+      return;
+    }
+
+    async function getFavorites() {
+      const docsRef = collection(db, "users", user.uid, "favorites");
+
+      const q = query(
+        docsRef,
+        orderBy("title"),
+        startAfter(user.lastVisibleDoc),
+        limit(5)
+      );
+
+      const querySnapshot = await getDocs(q);
+
+      const lastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+      dispatch({
+        type: "UPDATE_LAST_VISIBLE_DOCUMENT",
+        lastVisibleDoc: lastVisibleDoc
+      });
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+
+        dispatch({
+          type: "ADD_FAVORITE",
+          uid: user.uid,
+          favoriteId: doc.id,
+          favorite: data
+        });
+      });
+    }
+
+    getFavorites();
   }
 
   return (
@@ -34,7 +75,7 @@ function Home() {
           <Favorite key={favorite.id} favorite={favorite} />
         ))}
       </div>
-      {user.uid && (
+      {user.uid && user.lastVisibleDoc && (
         <button className={`btn ${styles.loadMoreBtn}`} onClick={fetchMoreDocs}>
           Load More
         </button>
