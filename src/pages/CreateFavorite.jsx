@@ -3,15 +3,17 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // firebase
-import { db, storage } from "../firebaseConfig";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 // styles
 import styles from "../styles/CreateFavorite.module.css";
 
 // contexts
-import { UserContext } from "../routes/root";
+import { UserContext } from "../contexts/UserContext";
+
+// hooks
+import { useUploadImage } from "../hooks/useUploadImage";
 
 function CreateFavorite() {
   const [title, setTitle] = useState("");
@@ -19,10 +21,12 @@ function CreateFavorite() {
   const [type, setType] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const { user, dispatch } = useContext(UserContext);
+
+  const { uploadImage, uploadedImage } = useUploadImage();
+
   const navigate = useNavigate();
 
   function handleSubmit(e) {
@@ -53,23 +57,11 @@ function CreateFavorite() {
     addFavorite();
 
     async function addFavorite() {
-      const trimmedTitle = title.replace(/ /g, "");
-
-      let imageStorageRef = "";
-      let imageRef = null;
-
-      if (imageFile) {
-        imageStorageRef = ref(
-          storage,
-          `${user.uid}/images/${trimmedTitle}/${imageFile.name}`
-        );
-
-        imageRef = await uploadBytes(imageStorageRef, imageFile);
-      }
+      const imageRef = await uploadImage(title, imageFile);
 
       const image = {
         title: imageFile ? imageFile.name : "",
-        path: imageRef ? imageRef.metadata.fullPath : ""
+        path: imageRef ? imageRef?.metadata?.fullPath : ""
       };
 
       // only add an image if one was provided by the user
@@ -95,8 +87,6 @@ function CreateFavorite() {
           image: image
         }
       });
-
-      setLoading(false);
 
       // go back to home page
       navigate("/");

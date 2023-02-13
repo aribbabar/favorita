@@ -6,7 +6,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 
 // contexts
-import { UserContext } from "../routes/root";
+import { UserContext } from "../contexts/UserContext";
 
 import styles from "../styles/DeleteModal.module.css";
 

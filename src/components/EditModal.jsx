@@ -7,7 +7,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 
 // contexts
-import { UserContext } from "../routes/root";
+import { UserContext } from "../contexts/UserContext";
 
 // styles
 import styles from "../styles/EditModal.module.css";

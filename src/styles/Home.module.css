@@ -25,6 +25,11 @@
   margin: 0 auto;
 }
 
+.loadMoreBtn {
+  display: block;
+  margin: 0 auto;
+}
+
 .feelsEmptyContainer {
   display: flex;
   flex-direction: column;

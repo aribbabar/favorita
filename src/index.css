@@ -9,10 +9,15 @@
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-*,
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+*:disabled {
+  background-color: dimgray;
+  color: linen;
+  opacity: 1;
 }
 
 :root {
@@ -28,13 +33,13 @@
   --error-color-v: var(--error-color);
 }
 
-[color-scheme="DARK"] {
+[color-scheme="LIGHT"] {
   --primary-color-v: var(--primary-color);
   --secondary-color-v: var(--secondary-color);
   --error-color-v: var(--error-color);
 }
 
-[color-scheme="LIGHT"] {
+[color-scheme="DARK"] {
   --primary-color-v: var(--secondary-color);
   --secondary-color-v: var(--primary-color);
   --error-color-v: var(--error-color);
@@ -76,9 +81,8 @@ input {
   overflow: hidden;
 }
 
-.material-icons {
-  font-size: 2em;
-  color: var(--primary-color-v);
+li {
+  box-sizing: border-box;
 }
 
 input {
@@ -99,13 +103,9 @@ button {
 }
 
 .material-icons {
+  font-size: 2em;
+  color: var(--primary-color-v);
   cursor: pointer;
-}
-
-*:disabled {
-  background-color: dimgray;
-  color: linen;
-  opacity: 1;
 }
 
 .loadingBallContainer {

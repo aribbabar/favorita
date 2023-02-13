@@ -1,17 +1,26 @@
-import { auth } from "../firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+// react
+import { useEffect, useState, useContext } from "react";
 
-import { useEffect, useState } from "react";
+// react router
 import { useNavigate } from "react-router-dom";
 
+// firebase
+import { db, auth } from "../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+// contexts
+import { UserContext } from "../contexts/UserContext";
+
+// styles
 import styles from "../styles/Login.module.css";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("johndoe@gmail.com");
+  const [password, setPassword] = useState("helloworld");
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState(false);
+
+  const { user, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -40,7 +49,7 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
+        const uid = userCredential.user.uid;
 
         navigate("/");
       })

@@ -6,17 +6,15 @@ import { storage } from "../firebaseConfig";
 import { ref, uploadBytes } from "firebase/storage";
 
 // contexts
-import { UserContext } from "../routes/root";
+import { UserContext } from "../contexts/UserContext";
 
-export function useUploadImage(favoriteTitle, imageFile) {
-  if (!favoriteTitle || !imageFile) {
-    return;
-  }
+export function useUploadImage() {
+  const { user, dispatch } = useContext(UserContext);
 
-  const [uploadedImage, setUploadedImage] = useState(null);
-
-  async function uploadImage() {
-    const { user, dispatch } = useContext(UserContext);
+  async function uploadImage(favoriteTitle, imageFile) {
+    if (!favoriteTitle || !imageFile) {
+      return "";
+    }
 
     const trimmedTitle = favoriteTitle.replace(/ /g, "");
     let imageStorageRef = "";
@@ -29,8 +27,8 @@ export function useUploadImage(favoriteTitle, imageFile) {
 
     imageRef = await uploadBytes(imageStorageRef, imageFile);
 
-    setUploadedImage(imageRef);
+    return imageRef;
   }
 
-  return { uploadImage, uploadImage };
+  return { uploadImage };
 }

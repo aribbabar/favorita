@@ -2,7 +2,7 @@
 import { useState, useContext, useEffect } from "react";
 
 // contexts
-import { UserContext } from "../routes/root";
+import { UserContext } from "../contexts/UserContext";
 
 // styles
 import styles from "../styles/CustomSelect.module.css";

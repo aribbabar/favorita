@@ -48,6 +48,7 @@
 
 .link {
   display: block;
+  width: 100%;
   background-color: var(--secondary-color-v);
   color: var(--primary-color-v);
   padding: 1rem;

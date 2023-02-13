@@ -1,10 +1,22 @@
+// react
+import { useState, useEffect, useContext } from "react";
+
+// react router
 import { Link } from "react-router-dom";
 
+// firebase
+import { auth } from "../firebaseConfig";
 import { signOut } from "firebase/auth";
 
+// contexts
+import { UserContext } from "../contexts/UserContext";
+
+// styles
 import styles from "../styles/NavMenu.module.css";
 
-function NavMenu({ auth, flipModal, loggedIn, setLoggedIn }) {
+function NavMenu({ flipModal }) {
+  const { user, dispatch } = useContext(UserContext);
+
   function signUserOut() {
     signOut(auth)
       .then(() => {
@@ -12,7 +24,6 @@ function NavMenu({ auth, flipModal, loggedIn, setLoggedIn }) {
         console.log("signed out successfully");
 
         flipModal();
-        setLoggedIn(false);
       })
       .catch((error) => {
         // An error happened.
@@ -27,22 +38,22 @@ function NavMenu({ auth, flipModal, loggedIn, setLoggedIn }) {
         <span className={`${styles.close} material-icons`} onClick={flipModal}>
           close
         </span>
-        <li>
-          {!loggedIn && (
+        {!user.uid && (
+          <li>
             <Link to={"login"} className={styles.link} onClick={flipModal}>
               Login
             </Link>
-          )}
-        </li>
-        <li>
-          {!loggedIn && (
+          </li>
+        )}
+        {!user.uid && (
+          <li>
             <Link to={"register"} className={styles.link} onClick={flipModal}>
               Register
             </Link>
-          )}
-        </li>
-        <li>
-          {loggedIn && (
+          </li>
+        )}
+        {user.uid && (
+          <li>
             <Link
               to={"create"}
               className={styles.link}
@@ -52,21 +63,15 @@ function NavMenu({ auth, flipModal, loggedIn, setLoggedIn }) {
             >
               Create New Favorite
             </Link>
-          )}
-        </li>
-        <li>
-          {loggedIn && (
-            <Link
-              to={"/"}
-              className={styles.link}
-              onClick={() => {
-                signUserOut();
-              }}
-            >
+          </li>
+        )}
+        {user.uid && (
+          <li>
+            <Link className={styles.link} to={"/"} onClick={signUserOut}>
               Sign out
             </Link>
-          )}
-        </li>
+          </li>
+        )}
       </ul>
     </nav>
   );
