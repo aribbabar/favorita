@@ -6,4 +6,4 @@ Have you ever struggled with remembering that one movie, that one game, or any p
 
 Sign up today and forget about forgetting!
 
-**[Favorita!](favorita.chalkys.net)**
+**[Favorita!](https://favorita.chalkys.net/)**
