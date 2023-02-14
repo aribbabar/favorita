@@ -19,7 +19,7 @@ function CreateFavorite() {
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState("");
   const [type, setType] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState(undefined);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,7 @@ function CreateFavorite() {
     navigate("/");
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     // start the loading animation
@@ -59,9 +59,13 @@ function CreateFavorite() {
       return;
     }
 
-    addFavorite();
+    if (!imageFile?.type.startsWith("image/")) {
+      setError("Please select an image");
+      setLoading(false);
+      return;
+    }
 
-    async function addFavorite() {
+    try {
       const imageRef = await uploadImage(title, imageFile);
 
       const image = {
@@ -95,6 +99,11 @@ function CreateFavorite() {
 
       // go back to home page
       navigate("/");
+    } catch (err) {
+      setError("Oops... Something went wrong!");
+      setLoading(false);
+
+      console.log(err);
     }
   }
 
@@ -143,6 +152,7 @@ function CreateFavorite() {
           required
           onChange={(e) => {
             setImageFile(e.target.files[0]);
+            setError("");
           }}
         />
         <input type="text" readOnly value={imageFile?.name || ""} />
