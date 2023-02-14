@@ -67,6 +67,19 @@ function NavMenu({ flipModal }) {
         )}
         {user.uid && (
           <li>
+            <Link
+              to={"categories"}
+              className={styles.link}
+              onClick={() => {
+                flipModal();
+              }}
+            >
+              Categories
+            </Link>
+          </li>
+        )}
+        {user.uid && (
+          <li>
             <Link className={styles.link} to={"/"} onClick={signUserOut}>
               Sign out
             </Link>

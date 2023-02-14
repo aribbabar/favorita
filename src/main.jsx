@@ -16,6 +16,7 @@ import {
 import Root from "./layouts/root";
 
 // pages
+import Categories from "./pages/Categories";
 import CreateFavorite from "./pages/CreateFavorite";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="create" element={<CreateFavorite />} />
+      <Route path="categories" element={<Categories />} />
     </Route>
   )
 );

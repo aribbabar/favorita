@@ -62,7 +62,7 @@ function CreateFavorite() {
       return;
     }
 
-    if (!imageFile?.type.startsWith("image/")) {
+    if (imageFile && !imageFile?.type.startsWith("image/")) {
       setError("Please select an image");
       setLoading(false);
       return;
