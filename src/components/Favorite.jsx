@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebaseConfig";
 
-// styles
-import styles from "../styles/Favorite.module.css";
-
 // components
 import ConfirmationModal from "./DeleteModal";
 import EditModal from "./EditModal";
+
+// styles
+import styles from "../styles/Favorite.module.css";
 
 function Favorite({ favorite }) {
   const [imageURL, setImageURL] = useState("");

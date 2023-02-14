@@ -14,7 +14,8 @@ export const UserContext = createContext();
 function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, {
     uid: "",
-    favorites: []
+    favorites: [],
+    lastVisibleDoc: undefined
   });
 
   useEffect(() => {

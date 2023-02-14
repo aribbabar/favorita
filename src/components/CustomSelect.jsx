@@ -17,7 +17,7 @@ function CustomSelect() {
 
   const options = ["Alphabetical", "Rating"];
 
-  function flipPrevOrderBy() {
+  function flipOrderBy() {
     setOrderBy((prev) => (prev === "ASC" ? "DESC" : "ASC"));
   }
 
@@ -29,7 +29,7 @@ function CustomSelect() {
           property: "title",
           orderBy: orderBy
         });
-        flipPrevOrderBy();
+        flipOrderBy();
 
         break;
       case "Rating":
@@ -38,7 +38,7 @@ function CustomSelect() {
           property: "rating",
           orderBy: orderBy
         });
-        flipPrevOrderBy();
+        flipOrderBy();
 
         break;
       default:

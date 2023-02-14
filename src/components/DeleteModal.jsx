@@ -1,3 +1,4 @@
+// react
 import { useContext, useState } from "react";
 
 // firebase
@@ -8,6 +9,7 @@ import { db, storage } from "../firebaseConfig";
 // contexts
 import { UserContext } from "../contexts/UserContext";
 
+// styles
 import styles from "../styles/DeleteModal.module.css";
 
 function ConfirmationModal({ favorite, setConfirmationModal }) {

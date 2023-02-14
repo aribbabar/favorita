@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 
 // layouts
-import Root from "./routes/root";
+import Root from "./layouts/root";
 
 // pages
 import CreateFavorite from "./pages/CreateFavorite";
