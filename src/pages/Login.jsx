@@ -14,6 +14,9 @@ import { UserContext } from "../contexts/UserContext";
 // styles
 import styles from "../styles/Login.module.css";
 
+// assets
+import Spinner from "../assets/Spinner.jsx";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -99,9 +102,7 @@ function Login() {
           onClick={handleSubmit}
         />
       </form>
-      <div className="loadingBallContainer">
-        {loading && <div className="loadingBall secondary-color"></div>}
-      </div>
+      {loading && <Spinner />}
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );

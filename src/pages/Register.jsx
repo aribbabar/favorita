@@ -15,6 +15,9 @@ import { UserContext } from "../contexts/UserContext";
 // styles
 import styles from "../styles/Register.module.css";
 
+// assets
+import Spinner from "../assets/Spinner.jsx";
+
 function LoginAndRegister() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -158,9 +161,7 @@ function LoginAndRegister() {
           onClick={handleSubmit}
         />
       </form>
-      <div className="loadingBallContainer">
-        {loading && <div className="loadingBall"></div>}
-      </div>
+      {loading && <Spinner />}
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );

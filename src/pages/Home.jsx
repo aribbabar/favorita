@@ -70,11 +70,13 @@ function Home() {
   return (
     <>
       {user.uid && <CustomSelect />}
-      <div className={styles.favoritesContainer}>
-        {user?.favorites.map((favorite) => (
-          <Favorite key={favorite.id} favorite={favorite} />
-        ))}
-      </div>
+      {user.uid && (
+        <div className={styles.favoritesContainer}>
+          {user?.favorites.map((favorite) => (
+            <Favorite key={favorite.id} favorite={favorite} />
+          ))}
+        </div>
+      )}
       {user.uid && user.favorites.length !== 0 && user.lastVisibleDoc && (
         <button className={`btn ${styles.loadMoreBtn}`} onClick={fetchMoreDocs}>
           Load More

@@ -7,14 +7,13 @@
   z-index: 1;
 }
 
-.closeBtn {
-  width: min-content;
-  margin-left: auto;
-  background-color: var(--primary-color-v);
-  padding-bottom: 1rem;
+.headerContainer {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  place-items: center;
 }
 
-.closeBtn span {
+.headerContainer span {
   color: var(--secondary-color-v);
 }
 
@@ -25,7 +24,7 @@
   transform: translate(-50%, -50%);
   background-color: var(--primary-color-v);
   color: var(--secondary-color-v);
-  width: 80vw;
+  width: 90vw;
   text-align: center;
   padding: 1rem;
   font-weight: normal;
@@ -35,6 +34,10 @@
   flex-direction: column;
   max-width: 500px;
   z-index: 2;
+}
+
+.container h2 {
+  color: var(--secondary-color-v);
 }
 
 form {

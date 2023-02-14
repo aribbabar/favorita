@@ -55,6 +55,7 @@ h4,
 h5,
 h6 {
   color: var(--primary-color-v);
+  font-weight: normal;
 }
 
 p {
@@ -119,25 +120,6 @@ button {
   cursor: pointer;
 }
 
-.loadingBallContainer {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  padding: 1rem;
-  margin-bottom: 20px;
-}
-
-.loadingBall {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: var(--secondary-color-v);
-  animation: bounce 0.5s;
-  animation-direction: alternate;
-  animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
-  animation-iteration-count: infinite;
-}
-
 form input[type="submit"] {
   cursor: pointer;
 }
@@ -157,16 +139,43 @@ form input[type="submit"] {
   border-radius: 12px;
 }
 
+.spinner {
+  display: block;
+  margin: 1rem auto;
+  animation: rotate 2s linear infinite;
+  width: 50px;
+  height: 50px;
+}
+
+.spinner .path {
+  stroke: var(--secondary-color-v);
+  stroke-width: 4px;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
 /* animations */
 .rotate {
   transform: rotate(180deg);
 }
 
-@keyframes bounce {
-  from {
-    transform: translate3d(0, 0, 0);
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
   }
-  to {
-    transform: translate3d(0, 50px, 0);
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
   }
 }

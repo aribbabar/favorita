@@ -6,14 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
-// styles
-import styles from "../styles/CreateFavorite.module.css";
-
 // contexts
 import { UserContext } from "../contexts/UserContext";
 
 // hooks
 import { useUploadImage } from "../hooks/useUploadImage";
+
+// styles
+import styles from "../styles/CreateFavorite.module.css";
+
+// assets
+import Spinner from "../assets/Spinner.jsx";
 
 function CreateFavorite() {
   const [title, setTitle] = useState("");
@@ -109,6 +112,8 @@ function CreateFavorite() {
 
   return (
     <div className={styles.container}>
+      <h2>Create New Favorite</h2>
+      <div className="line-break"></div>
       <form>
         <input
           type="text"
@@ -158,14 +163,12 @@ function CreateFavorite() {
         <input type="text" readOnly value={imageFile?.name || ""} />
         <input
           type="submit"
-          value="Add"
+          value="Create"
           disabled={loading}
           onClick={handleSubmit}
         />
       </form>
-      <div className={styles.loadingBallContainer}>
-        {loading && <div className={styles.loadingBall}></div>}
-      </div>
+      {loading && <Spinner />}
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );

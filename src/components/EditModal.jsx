@@ -15,6 +15,9 @@ import { useUploadImage } from "../hooks/useUploadImage";
 // styles
 import styles from "../styles/EditModal.module.css";
 
+// assets
+import Spinner from "../assets/Spinner.jsx";
+
 function EditModal({ favorite, setEditModal }) {
   const [title, setTitle] = useState(favorite.title);
   const [rating, setRating] = useState(favorite.rating);
@@ -121,9 +124,14 @@ function EditModal({ favorite, setEditModal }) {
         }}
       ></div>
       <div className={styles.container}>
-        <button className={styles.closeBtn} onClick={() => setEditModal(false)}>
-          <span className="material-icons">close</span>
-        </button>
+        <div className={styles.headerContainer}>
+          <h2>Edit</h2>
+          <span className="material-icons" onClick={() => setEditModal(false)}>
+            close
+          </span>
+        </div>
+        <div className="line-break"></div>
+
         <form>
           <input
             type="text"
@@ -182,9 +190,7 @@ function EditModal({ favorite, setEditModal }) {
             <span className="material-icons">done</span>
           </button>
         </form>
-        <div className="loadingBallContainer">
-          {loading && <div className="loadingBall"></div>}
-        </div>
+        {loading && <Spinner />}
         {error && <p className={styles.error}>{error}</p>}
       </div>
     </>
