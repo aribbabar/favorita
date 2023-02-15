@@ -12,16 +12,16 @@ import { UserContext } from "../contexts/UserContext";
 // hooks
 import { useUploadImage } from "../hooks/useUploadImage";
 
-// styles
-import styles from "../styles/CreateFavorite.module.css";
-
 // assets
 import Spinner from "../assets/Spinner.jsx";
+
+// styles
+import styles from "../styles/pages/CreateFavorite.module.css";
 
 function CreateFavorite() {
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState("");
-  const [type, setType] = useState("");
+  const [category, setCategory] = useState("");
   const [imageFile, setImageFile] = useState(undefined);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -56,8 +56,8 @@ function CreateFavorite() {
       return;
     }
 
-    if (!type || type === "Type") {
-      setError("Please select a type");
+    if (!category || category === "Category") {
+      setError("Please select a category");
       setLoading(false);
       return;
     }
@@ -81,7 +81,7 @@ function CreateFavorite() {
         collection(db, "users", user.uid, "favorites"),
         {
           title: title,
-          type: type,
+          category: category,
           rating: rating,
           image: image,
           createdAt: serverTimestamp()
@@ -94,7 +94,7 @@ function CreateFavorite() {
         favoriteId: docRef.id,
         favorite: {
           title: title,
-          type: type,
+          category: category,
           rating: rating,
           image: image
         }
@@ -136,17 +136,18 @@ function CreateFavorite() {
           }}
         />
         <select
-          value={type}
+          value={category}
           onChange={(e) => {
-            setType(e.target.value);
+            setCategory(e.target.value);
             setError("");
           }}
         >
-          <option value="Type">-- Select a type --</option>
-          <option value="Game">Game</option>
-          <option value="Movie">Movie</option>
-          <option value="TV-Show">TV-Show</option>
-          <option value="Music Track">Music Track</option>
+          <option value="Category">-- Select a category --</option>
+          {user.categories.map((category, i) => (
+            <option key={i} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
         <label htmlFor="img-upload" className={styles.customUploadBtn}>
           <span className="material-icons">upload_file</span> Upload

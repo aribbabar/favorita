@@ -1,0 +1,43 @@
+.customSelect {
+  width: 250px;
+  position: relative;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.customSelectSelected {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 1fr min-content;
+  background-color: var(--primary-color-v);
+  color: var(--secondary-color-v);
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--secondary-color-v);
+}
+
+.customSelectSelected p {
+  color: var(--secondary-color-v);
+}
+
+.customSelectSelected span {
+  color: var(--secondary-color-v);
+}
+
+.rotate {
+  animation: rotate 1s ease-in-out;
+}
+
+.customSelectOptions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.customSelectOption {
+  background-color: var(--primary-color-v);
+  color: var(--secondary-color-v);
+  padding: 0.8rem;
+  border-radius: 0;
+  border-bottom: 1px solid var(--secondary-color-v);
+}

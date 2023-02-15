@@ -13,7 +13,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useUploadImage } from "../hooks/useUploadImage";
 
 // styles
-import styles from "../styles/EditModal.module.css";
+import styles from "../styles/components/FavoriteEditModal.module.css";
 
 // assets
 import Spinner from "../assets/Spinner.jsx";
@@ -21,7 +21,7 @@ import Spinner from "../assets/Spinner.jsx";
 function EditModal({ favorite, setEditModal }) {
   const [title, setTitle] = useState(favorite.title);
   const [rating, setRating] = useState(favorite.rating);
-  const [type, setType] = useState(favorite.type);
+  const [category, setCategory] = useState(favorite.category);
   const [imageTitle, setImageTitle] = useState(favorite.image.title);
   const [imageFile, setImageFile] = useState(undefined);
   const [error, setError] = useState("");
@@ -48,8 +48,8 @@ function EditModal({ favorite, setEditModal }) {
       return;
     }
 
-    if (!type || type === "Type") {
-      setError("Please select a type");
+    if (!category || category === "Category") {
+      setError("Please select a category");
       setLoading(false);
       return;
     }
@@ -90,7 +90,7 @@ function EditModal({ favorite, setEditModal }) {
 
     await updateDoc(favoriteRef, {
       title: title,
-      type: type,
+      category: category,
       rating: rating,
       image: image
     });
@@ -103,7 +103,7 @@ function EditModal({ favorite, setEditModal }) {
       favorite: {
         id: favorite.id,
         title: title,
-        type: type,
+        category: category,
         rating: rating,
         image: image
       }
@@ -131,7 +131,6 @@ function EditModal({ favorite, setEditModal }) {
           </span>
         </div>
         <div className="line-break"></div>
-
         <form>
           <input
             type="text"
@@ -152,17 +151,18 @@ function EditModal({ favorite, setEditModal }) {
             }}
           />
           <select
-            value={type}
+            value={category}
             onChange={(e) => {
-              setType(e.target.value);
+              setCategory(e.target.value);
               setError("");
             }}
           >
-            <option value="Type">-- Select a type --</option>
-            <option value="Game">Game</option>
-            <option value="Movie">Movie</option>
-            <option value="TV-Show">TV-Show</option>
-            <option value="Music Track">Music Track</option>
+            <option value="Category">-- Select a category --</option>
+            {user.categories.map((category, i) => (
+              <option key={i} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
           <label htmlFor="img-upload" className={styles.customUploadBtn}>
             <span className="material-icons">upload_file</span> Upload

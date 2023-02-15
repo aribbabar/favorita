@@ -1,11 +1,25 @@
+// @dnd-kit
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useState } from "react";
 
-import styles from "../styles/Category.module.css";
+// components
+import CategoryEditModal from "./CategoryEditModal";
 
-function Category({ index, category }) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: index });
+// styles
+import styles from "../styles/components/Category.module.css";
+
+function Category({ id, category, setItems }) {
+  const [editModal, setEditModal] = useState(false);
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition
+  } = useSortable({ id: id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -13,16 +27,33 @@ function Category({ index, category }) {
   };
 
   return (
-    <div
-      className={styles.container}
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-    >
-      <p>{index}</p>
-      <p>{category}</p>
-    </div>
+    <>
+      {editModal && (
+        <CategoryEditModal
+          category={category}
+          setEditModal={setEditModal}
+          setItems={setItems}
+        />
+      )}
+      <div
+        className={styles.container}
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+      >
+        <p>{category}</p>
+        <button onClick={() => setEditModal(!editModal)}>
+          <span className="material-icons">edit</span>
+        </button>
+        <button
+          className={styles.dragCursor}
+          ref={setActivatorNodeRef}
+          {...listeners}
+        >
+          <span className="material-icons">drag_handle</span>
+        </button>
+      </div>
+    </>
   );
 }
 

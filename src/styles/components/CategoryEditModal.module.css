@@ -1,0 +1,48 @@
+.underlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 20%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: var(--primary-color-v);
+  color: var(--secondary-color-v);
+  border-radius: 12px;
+  z-index: 2;
+}
+
+.container .editForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.container .editForm button {
+  background-color: var(--secondary-color-v);
+}
+
+.container .editForm span {
+  color: var(--primary-color-v);
+}
+
+.container .editForm .topContainer {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  gap: 1rem;
+}
+
+.container .editForm .topContainer input {
+  padding: 1rem;
+  border-radius: 12px;
+}

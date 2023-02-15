@@ -1,5 +1,5 @@
 // react
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // react-router
 import { Link } from "react-router-dom";
@@ -20,13 +20,35 @@ import { UserContext } from "../contexts/UserContext";
 
 // components
 import Favorite from "../components/Favorite";
+import FilterByCustomSelect from "../components/FilterByCustomSelect";
+import OrderByCustomSelect from "../components/OrderByCustomSelect";
 
 // styles
-import CustomSelect from "../components/CustomSelect";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/pages/Home.module.css";
 
 function Home() {
   const { user, dispatch } = useContext(UserContext);
+
+  const [filterValue, setFilterValue] = useState("All");
+  const [filteredFavorites, setFilteredFavorites] = useState(user.favorites);
+
+  useEffect(() => {
+    const filteredArray =
+      filterValue === "All"
+        ? user.favorites
+        : user.favorites.filter((fav) => fav.category === filterValue);
+
+    setFilteredFavorites([...filteredArray]);
+  }, [user.favorites]);
+
+  function handleFilterOptionClick(option) {
+    const filteredArray =
+      option === "All"
+        ? user.favorites
+        : user.favorites.filter((fav) => fav.category === option);
+
+    setFilteredFavorites([...filteredArray]);
+  }
 
   function fetchMoreDocs() {
     if (user.lastVisibleDoc === undefined) {
@@ -69,10 +91,19 @@ function Home() {
 
   return (
     <>
-      {user.uid && <CustomSelect />}
+      <div className={styles.customSelectsContainer}>
+        {user.uid && <OrderByCustomSelect />}
+        {user.uid && (
+          <FilterByCustomSelect
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            handleFilterOptionClick={handleFilterOptionClick}
+          />
+        )}
+      </div>
       {user.uid && (
         <div className={styles.favoritesContainer}>
-          {user?.favorites.map((favorite) => (
+          {filteredFavorites.map((favorite) => (
             <Favorite key={favorite.id} favorite={favorite} />
           ))}
         </div>

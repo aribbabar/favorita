@@ -1,7 +1,0 @@
-.container {
-  background-color: var(--secondary-color);
-  display: grid;
-  grid-template-columns: min-content 1fr;
-  padding: 1rem;
-  border-radius: 12px;
-}

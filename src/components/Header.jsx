@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import NavMenu from "./NavMenu";
 
 // styles
-import styles from "../styles/Header.module.css";
+import styles from "../styles/components/Header.module.css";
 
 function Header() {
   const [modal, setModal] = useState(false);

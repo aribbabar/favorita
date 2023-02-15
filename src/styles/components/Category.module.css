@@ -1,0 +1,29 @@
+.container {
+  background-color: var(--secondary-color-v);
+  padding: 1rem;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr min-content min-content;
+  place-items: center;
+  gap: 0.5rem;
+}
+
+.container button {
+  background-color: var(--primary-color-v);
+  border-radius: 4px;
+  display: flex;
+}
+
+.container button span {
+  font-size: 24px;
+  color: var(--secondary-color-v);
+}
+
+.dragCursor span {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+}
+
+.dragCursor span:active {
+  cursor: grabbing;
+}

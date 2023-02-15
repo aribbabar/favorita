@@ -1,61 +1,38 @@
 // react
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // contexts
 import { UserContext } from "../contexts/UserContext";
 
 // styles
-import styles from "../styles/CustomSelect.module.css";
+import styles from "../styles/components/FilterByCustomSelect.module.css";
 
-function CustomSelect() {
+function CustomSelect({
+  filterValue,
+  setFilterValue,
+  handleFilterOptionClick
+}) {
   const { user, dispatch } = useContext(UserContext);
 
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
   const [rotate, setRotate] = useState(false);
-  const [orderBy, setOrderBy] = useState("DESC");
 
-  const options = ["Alphabetical", "Rating"];
+  const [options, setOptions] = useState([]);
 
-  function flipOrderBy() {
-    setOrderBy((prev) => (prev === "ASC" ? "DESC" : "ASC"));
-  }
-
-  function optionChange(option) {
-    switch (option) {
-      case "Alphabetical":
-        dispatch({
-          type: "SORT_BY_GIVEN_PROPERTY",
-          property: "title",
-          orderBy: orderBy
-        });
-        flipOrderBy();
-
-        break;
-      case "Rating":
-        dispatch({
-          type: "SORT_BY_GIVEN_PROPERTY",
-          property: "rating",
-          orderBy: orderBy
-        });
-        flipOrderBy();
-
-        break;
-      default:
-        console.log("invalid option:", option);
-    }
-  }
+  useEffect(() => {
+    setOptions(["All", ...user.categories]);
+  }, [user.categories]);
 
   function toggleDropdown() {
     setOpen(!open);
   }
 
   function handleOptionClick(value) {
-    setSelectedValue(value);
+    setFilterValue(value);
     setOpen(false);
     flipRotate();
 
-    optionChange(value);
+    handleFilterOptionClick(value);
   }
 
   function flipRotate() {
@@ -71,7 +48,7 @@ function CustomSelect() {
           flipRotate();
         }}
       >
-        {selectedValue || options[0]}{" "}
+        <p>Filter: {filterValue || options[0]} </p>
         <span className={`material-icons ${rotate ? "rotate" : ""}`}>
           expand_less
         </span>

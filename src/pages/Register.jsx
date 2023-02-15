@@ -13,7 +13,7 @@ import { auth, db } from "../firebaseConfig";
 import { UserContext } from "../contexts/UserContext";
 
 // styles
-import styles from "../styles/Register.module.css";
+import styles from "../styles/pages/Register.module.css";
 
 // assets
 import Spinner from "../assets/Spinner.jsx";

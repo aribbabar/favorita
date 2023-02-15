@@ -3,7 +3,15 @@ import { createContext, useEffect, useReducer } from "react";
 
 // firebase
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query
+} from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
 
 // reducers
@@ -15,18 +23,25 @@ function UserContextProvider({ children }) {
   const [user, dispatch] = useReducer(userReducer, {
     uid: "",
     favorites: [],
+    categories: [],
     lastVisibleDoc: undefined
   });
 
   useEffect(() => {
     onAuthStateChanged(auth, (u) => {
       if (u) {
-        console.log("new request for all docs");
-
         // User is signed in
         const uid = u.uid;
 
         dispatch({ type: "SET_UID", uid });
+
+        // new request for favorites
+        console.log("new request for favorites");
+        getFavorites();
+
+        // new request for categories
+        console.log("new request for categories");
+        getCategories();
 
         async function getFavorites() {
           const docsRef = collection(db, "users", uid, "favorites");
@@ -48,21 +63,24 @@ function UserContextProvider({ children }) {
 
             dispatch({
               type: "ADD_FAVORITE",
-              uid: uid,
               favoriteId: doc.id,
               favorite: data
             });
           });
-
-          // after adding all docs, sort alphabetically by title
-          // dispatch({
-          //   type: "SORT_BY_GIVEN_PROPERTY",
-          //   property: "title",
-          //   orderBy: "ASC"
-          // });
         }
 
-        getFavorites();
+        async function getCategories() {
+          const docRef = doc(db, "users", uid);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            const { categories } = docSnap.data();
+
+            dispatch({ type: "SET_CATEGORIES", categories: categories });
+          } else {
+            console.log("No such document!");
+          }
+        }
       } else {
         // User is signed out
 

@@ -7,10 +7,10 @@ import { storage } from "../firebaseConfig";
 
 // components
 import ConfirmationModal from "./DeleteModal";
-import EditModal from "./EditModal";
+import FavoriteEditModal from "./FavoriteEditModal";
 
 // styles
-import styles from "../styles/Favorite.module.css";
+import styles from "../styles/components/Favorite.module.css";
 
 function Favorite({ favorite }) {
   const [imageURL, setImageURL] = useState("");
@@ -56,7 +56,7 @@ function Favorite({ favorite }) {
         />
       )}
       {editModal && (
-        <EditModal favorite={favorite} setEditModal={setEditModal} />
+        <FavoriteEditModal favorite={favorite} setEditModal={setEditModal} />
       )}
       <div className={styles.favoriteContainer}>
         {/* display an image if one exists */}
@@ -88,7 +88,7 @@ function Favorite({ favorite }) {
         </div>
         <h4 className={styles.title}>{favorite.title}</h4>
         <div className="line-break"></div>
-        <h4>Type: {favorite.type}</h4>
+        <h4>Category: {favorite.category}</h4>
         <h4>Rating: {favorite.rating}</h4>
       </div>
     </>

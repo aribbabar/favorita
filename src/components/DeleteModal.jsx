@@ -10,7 +10,7 @@ import { db, storage } from "../firebaseConfig";
 import { UserContext } from "../contexts/UserContext";
 
 // styles
-import styles from "../styles/DeleteModal.module.css";
+import styles from "../styles/components/DeleteModal.module.css";
 
 function ConfirmationModal({ favorite, setConfirmationModal }) {
   const [loading, setLoading] = useState(false);

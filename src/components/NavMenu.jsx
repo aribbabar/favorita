@@ -12,7 +12,7 @@ import { auth } from "../firebaseConfig";
 import { UserContext } from "../contexts/UserContext";
 
 // styles
-import styles from "../styles/NavMenu.module.css";
+import styles from "../styles/components/NavMenu.module.css";
 
 function NavMenu({ flipModal }) {
   const { user, dispatch } = useContext(UserContext);

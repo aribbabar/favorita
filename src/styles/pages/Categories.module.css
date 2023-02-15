@@ -22,13 +22,31 @@
 .container form {
   display: grid;
   grid-template-columns: 1fr min-content;
+  gap: 1rem;
+}
+
+.container form input {
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.container form button[type="submit"] {
+  color: var(--primary-color-v);
 }
 
 .container button[type="submit"] {
   background-color: var(--secondary-color-v);
+  padding: 1rem;
 }
 
 .categoriesContainer {
   display: grid;
   gap: 1rem;
+}
+
+.submitBtn {
+  background-color: var(--secondary-color-v);
+  color: var(--primary-color-v);
+  padding: 1rem;
+  margin: 1rem 0;
 }

@@ -154,6 +154,14 @@ form input[type="submit"] {
   animation: dash 1.5s ease-in-out infinite;
 }
 
+.text-error {
+  color: var(--error-color-v);
+}
+
+.text-green {
+  color: #28a745;
+}
+
 /* animations */
 .rotate {
   transform: rotate(180deg);

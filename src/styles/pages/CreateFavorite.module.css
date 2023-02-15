@@ -18,32 +18,32 @@
   color: var(--secondary-color-v);
 }
 
-form {
+.container form {
   display: grid;
   gap: 1rem;
   align-content: center;
 }
 
-form > * {
+.container form > * {
   padding: 1rem;
   border-radius: 12px;
   font-size: 16px;
 }
 
-form input[type="submit"] {
+.container form input[type="submit"] {
   background-color: var(--secondary-color-v);
   color: var(--primary-color-v);
 }
 
-form select option[value="Type"] {
+.container form select option[value="Type"] {
   text-align: center;
 }
 
-form input[type="file"] {
+.container form input[type="file"] {
   display: none;
 }
 
-form .customUploadBtn {
+.container form .customUploadBtn {
   display: flex;
   align-items: center;
   justify-content: center;
