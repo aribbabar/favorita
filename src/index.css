@@ -107,6 +107,10 @@ input::placeholder {
   color: var(--primary-color-v);
 }
 
+form input[type="submit"] {
+  cursor: pointer;
+}
+
 button {
   border: 0;
   font-size: 1em;
@@ -116,11 +120,6 @@ button {
 
 .material-icons {
   font-size: 2em;
-  color: var(--primary-color-v);
-  cursor: pointer;
-}
-
-form input[type="submit"] {
   cursor: pointer;
 }
 

@@ -27,11 +27,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  // go back to home if logged in
-  if (user.uid) {
-    navigate("/");
-  }
-
   useEffect(() => {
     setError("");
   }, [window.location.pathname]);

@@ -1,4 +1,7 @@
+// react
 import { useState } from "react";
+
+// styles
 import styles from "../styles/components/CategoryEditModal.module.css";
 
 function replaceArrayItem(arr, oldValue, newValue) {

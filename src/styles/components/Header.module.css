@@ -4,3 +4,7 @@ header {
   text-align: center;
   margin: 1rem;
 }
+
+header span {
+  color: var(--primary-color-v);
+}

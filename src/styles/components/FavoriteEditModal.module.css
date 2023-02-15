@@ -88,17 +88,22 @@
   gap: 1rem;
 }
 
-.imageDetailsContainer * {
+.imageDetailsContainer > * {
   padding: 1rem;
   border-radius: 12px;
 }
 
-.imageDetailsContainer span {
+.imageDetailsContainer button {
   background-color: var(--secondary-color-v);
+}
+
+.imageDetailsContainer button span {
+  color: var(--primary-color-v);
 }
 
 form .submitBtn {
   background-color: var(--secondary-color-v);
+  color: var(--primary-color-v);
 }
 
 .error {

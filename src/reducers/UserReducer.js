@@ -1,31 +1,32 @@
-function sortByPropertyAsc(arr, property) {
-  return arr.sort((a, b) => {
-    if (a[property] < b[property]) return -1;
-    if (a[property] > b[property]) return 1;
-    return 0;
-  });
-}
-
-function sortByPropertyDesc(arr, property) {
-  return arr.sort((a, b) => {
-    if (a[property] < b[property]) return 1;
-    if (a[property] > b[property]) return -1;
-    return 0;
-  });
+function sortByProperty(arr, prop, order) {
+  if (order === "ASC") {
+    return arr.sort(function (a, b) {
+      if (typeof a[prop] === "string" && typeof b[prop] === "string") {
+        return a[prop].localeCompare(b[prop]);
+      } else {
+        return a[prop] - b[prop];
+      }
+    });
+  } else if (order === "DESC") {
+    return arr.sort(function (a, b) {
+      if (typeof a[prop] === "string" && typeof b[prop] === "string") {
+        return b[prop].localeCompare(a[prop]);
+      } else {
+        return b[prop] - a[prop];
+      }
+    });
+  } else {
+    return arr;
+  }
 }
 
 function userReducer(state, action) {
   switch (action.type) {
     case "SET_UID":
-      return {
-        uid: action.uid,
-        favorites: state.favorites,
-        categories: state.categories,
-        lastVisibleDoc: state.lastVisibleDoc
-      };
+      return { ...state, uid: action.uid };
     case "ADD_FAVORITE":
       return {
-        uid: state.uid,
+        ...state,
         favorites: [
           ...state.favorites,
           {
@@ -35,13 +36,11 @@ function userReducer(state, action) {
             category: action.favorite.category,
             image: action.favorite.image
           }
-        ],
-        categories: state.categories,
-        lastVisibleDoc: state.lastVisibleDoc
+        ]
       };
     case "UPDATE_FAVORITE":
       return {
-        uid: state.uid,
+        ...state,
         favorites: [
           ...state.favorites.filter((fav) => fav.id !== action.favorite.id),
           {
@@ -51,42 +50,28 @@ function userReducer(state, action) {
             category: action.favorite.category,
             image: action.favorite.image
           }
-        ],
-        categories: state.categories,
-        lastVisibleDoc: state.lastVisibleDoc
+        ]
       };
     case "REMOVE_FAVORITE":
       return {
-        uid: state.uid,
-        favorites: state.favorites.filter((fav) => fav.id !== action.id),
-        categories: state.categories,
-        lastVisibleDoc: state.lastVisibleDoc
+        ...state,
+        favorites: state.favorites.filter((fav) => fav.id !== action.id)
       };
 
     case "SET_CATEGORIES":
-      return {
-        uid: state.uid,
-        favorites: state.favorites,
-        categories: action.categories,
-        lastVisibleDoc: state.lastVisibleDoc
-      };
+      return { ...state, categories: action.categories };
     case "SORT_BY_GIVEN_PROPERTY":
       return {
-        uid: state.uid,
+        ...state,
         favorites:
           action.orderBy === "ASC"
-            ? [...sortByPropertyAsc(state.favorites, action.property)]
-            : [...sortByPropertyDesc(state.favorites, action.property)],
-        categories: state.categories,
-        lastVisibleDoc: state.lastVisibleDoc
+            ? [...sortByProperty(state.favorites, action.property, "ASC")]
+            : [...sortByProperty(state.favorites, action.property, "DESC")]
       };
     case "UPDATE_LAST_VISIBLE_DOCUMENT":
-      return {
-        uid: state.uid,
-        favorites: state.favorites,
-        categories: state.categories,
-        lastVisibleDoc: action.lastVisibleDoc
-      };
+      return { ...state, lastVisibleDoc: action.lastVisibleDoc };
+    case "UPDATE_TOTAL_FAVORITES_COUNT":
+      return { ...state, totalFavoritesCount: action.totalFavoritesCount };
     case "SIGN_OUT":
       return {
         uid: "",

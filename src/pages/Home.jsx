@@ -108,11 +108,16 @@ function Home() {
           ))}
         </div>
       )}
-      {user.uid && user.favorites.length !== 0 && user.lastVisibleDoc && (
-        <button className={`btn ${styles.loadMoreBtn}`} onClick={fetchMoreDocs}>
-          Load More
-        </button>
-      )}
+      {user.uid &&
+        user.favorites.length !== 0 &&
+        user.favorites.length < user.totalFavoritesCount && (
+          <button
+            className={`btn ${styles.loadMoreBtn}`}
+            onClick={fetchMoreDocs}
+          >
+            Load More
+          </button>
+        )}
       {/* if the user is logged in and did not add any favorites yet */}
       {user.uid && user?.favorites.length === 0 && (
         <div className={styles.feelsEmptyContainer}>

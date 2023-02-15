@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   doc,
+  getCountFromServer,
   getDoc,
   getDocs,
   limit,
@@ -24,7 +25,8 @@ function UserContextProvider({ children }) {
     uid: "",
     favorites: [],
     categories: [],
-    lastVisibleDoc: undefined
+    lastVisibleDoc: undefined,
+    totalFavoritesCount: 0
   });
 
   useEffect(() => {
@@ -42,6 +44,8 @@ function UserContextProvider({ children }) {
         // new request for categories
         console.log("new request for categories");
         getCategories();
+
+        getTotalFavoritesCount();
 
         async function getFavorites() {
           const docsRef = collection(db, "users", uid, "favorites");
@@ -80,6 +84,17 @@ function UserContextProvider({ children }) {
           } else {
             console.log("No such document!");
           }
+        }
+
+        async function getTotalFavoritesCount() {
+          const docsRef = collection(db, "users", uid, "favorites");
+
+          const snapshot = await getCountFromServer(docsRef);
+
+          dispatch({
+            type: "UPDATE_TOTAL_FAVORITES_COUNT",
+            totalFavoritesCount: snapshot.data().count
+          });
         }
       } else {
         // User is signed out

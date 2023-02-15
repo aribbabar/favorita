@@ -177,9 +177,9 @@ function EditModal({ favorite, setEditModal }) {
           />
           <div className={styles.imageDetailsContainer}>
             <input type="text" readOnly value={imageTitle} />
-            <span className="material-icons" onClick={() => setImageTitle("")}>
-              close
-            </span>
+            <button onClick={() => setImageTitle("")}>
+              <span className="material-icons">close</span>
+            </button>
           </div>
           <button
             className={styles.submitBtn}

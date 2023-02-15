@@ -6,7 +6,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../firebaseConfig";
 
 // components
-import ConfirmationModal from "./DeleteModal";
+import DeleteModal from "./DeleteModal";
 import FavoriteEditModal from "./FavoriteEditModal";
 
 // styles
@@ -15,7 +15,7 @@ import styles from "../styles/components/Favorite.module.css";
 function Favorite({ favorite }) {
   const [imageURL, setImageURL] = useState("");
   const [randomColor, setRandomColor] = useState("");
-  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
 
   useEffect(() => {
@@ -49,11 +49,8 @@ function Favorite({ favorite }) {
 
   return (
     <>
-      {confirmationModal && (
-        <ConfirmationModal
-          favorite={favorite}
-          setConfirmationModal={setConfirmationModal}
-        />
+      {deleteModal && (
+        <DeleteModal favorite={favorite} setDeleteModal={setDeleteModal} />
       )}
       {editModal && (
         <FavoriteEditModal favorite={favorite} setEditModal={setEditModal} />
@@ -80,7 +77,7 @@ function Favorite({ favorite }) {
           </div>
           <div
             className={styles.deleteContainer}
-            onClick={() => setConfirmationModal(true)}
+            onClick={() => setDeleteModal(true)}
           >
             <span className="material-icons">delete</span>
             <p>Delete</p>

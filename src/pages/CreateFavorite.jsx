@@ -32,11 +32,6 @@ function CreateFavorite() {
 
   const navigate = useNavigate();
 
-  // go back to home if not logged in
-  if (!user.uid) {
-    navigate("/");
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -82,7 +77,7 @@ function CreateFavorite() {
         {
           title: title,
           category: category,
-          rating: rating,
+          rating: !isNaN(rating) ? parseFloat(rating) : rating,
           image: image,
           createdAt: serverTimestamp()
         }
@@ -95,7 +90,7 @@ function CreateFavorite() {
         favorite: {
           title: title,
           category: category,
-          rating: rating,
+          rating: !isNaN(rating) ? parseFloat(rating) : rating,
           image: image
         }
       });

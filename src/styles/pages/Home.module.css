@@ -8,10 +8,11 @@
 }
 
 .favoritesContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
   gap: 1rem;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
 }
 

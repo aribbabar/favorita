@@ -12,7 +12,7 @@ import { UserContext } from "../contexts/UserContext";
 // styles
 import styles from "../styles/components/DeleteModal.module.css";
 
-function ConfirmationModal({ favorite, setConfirmationModal }) {
+function DeleteModal({ favorite, setDeleteModal }) {
   const [loading, setLoading] = useState(false);
 
   const { user, dispatch } = useContext(UserContext);
@@ -31,9 +31,13 @@ function ConfirmationModal({ favorite, setConfirmationModal }) {
     }
 
     dispatch({ type: "REMOVE_FAVORITE", id: favorite.id });
+    dispatch({
+      type: "UPDATE_TOTAL_FAVORITES_COUNT",
+      totalFavoritesCount: user.totalFavoritesCount - 1
+    });
 
     setLoading(false);
-    setConfirmationModal(false);
+    setDeleteModal(false);
   }
 
   return (
@@ -50,7 +54,7 @@ function ConfirmationModal({ favorite, setConfirmationModal }) {
         >
           <span className="material-icons">done</span>
         </button>
-        <button onClick={() => setConfirmationModal(false)}>
+        <button onClick={() => setDeleteModal(false)}>
           <span className="material-icons">close</span>
         </button>
       </div>
@@ -58,4 +62,4 @@ function ConfirmationModal({ favorite, setConfirmationModal }) {
   );
 }
 
-export default ConfirmationModal;
+export default DeleteModal;

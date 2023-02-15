@@ -27,6 +27,7 @@
 
 .confirmationModalContainer button {
   background-color: var(--secondary-color-v);
+  color: var(--primary-color-v);
 }
 
 .confirmationModalContainer p {

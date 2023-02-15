@@ -48,4 +48,5 @@
 .editContainer *,
 .deleteContainer * {
   cursor: pointer;
+  color: var(--secondary-color-v);
 }
