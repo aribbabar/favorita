@@ -5,6 +5,14 @@
   margin: 0 auto;
   padding: 1rem;
   max-width: max-content;
+  align-items: center;
+}
+
+.topCreateBtn {
+  color: var(--primary-color-v);
+  display: block;
+  width: min-content;
+  margin: 0 auto;
 }
 
 .favoritesContainer {
@@ -25,6 +33,7 @@
 .loadMoreBtn {
   display: block;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 .feelsEmptyContainer {
@@ -32,4 +41,8 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.createBtn {
+  color: var(--primary-color-v);
 }

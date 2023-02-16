@@ -91,22 +91,25 @@ function Home() {
 
   return (
     <>
-      <div className={styles.customSelectsContainer}>
-        {user.uid && <OrderByCustomSelect />}
-        {user.uid && (
-          <FilterByCustomSelect
-            filterValue={filterValue}
-            setFilterValue={setFilterValue}
-            handleFilterOptionClick={handleFilterOptionClick}
-          />
-        )}
-      </div>
       {user.uid && (
-        <div className={styles.favoritesContainer}>
-          {filteredFavorites.map((favorite) => (
-            <Favorite key={favorite.id} favorite={favorite} />
-          ))}
-        </div>
+        <>
+          <div className={styles.customSelectsContainer}>
+            <OrderByCustomSelect />
+            <FilterByCustomSelect
+              filterValue={filterValue}
+              setFilterValue={setFilterValue}
+              handleFilterOptionClick={handleFilterOptionClick}
+            />
+          </div>
+          <Link className={styles.topCreateBtn} to="/create">
+            <span className="material-icons">add_circle</span>
+          </Link>
+          <div className={styles.favoritesContainer}>
+            {filteredFavorites.map((favorite) => (
+              <Favorite key={favorite.id} favorite={favorite} />
+            ))}
+          </div>
+        </>
       )}
       {user.uid &&
         user.favorites.length !== 0 &&

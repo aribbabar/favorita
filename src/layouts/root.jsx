@@ -14,6 +14,7 @@ function Root() {
       <main>
         <Outlet />
       </main>
+      <div className="line-break primary-color"></div>
       <footer className={styles.footer}>
         <p>Made with ❤️ by Arib Farooqui</p>
       </footer>

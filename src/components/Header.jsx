@@ -51,6 +51,7 @@ function Header() {
           light_mode
         </span>
       </header>
+      <div className="line-break primary-color"></div>
       {modal && <NavMenu flipModal={flipModal} />}
     </>
   );
