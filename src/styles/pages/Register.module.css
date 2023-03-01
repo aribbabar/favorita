@@ -1,8 +1,9 @@
 .container {
   background-color: var(--primary-color-v);
   color: var(--secondary-color-v);
-  width: 80vw;
   min-height: 80vh;
+  width: 95vw;
+  max-width: 500px;
   margin: 1rem auto;
   text-align: center;
   padding: 1rem;
@@ -11,7 +12,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  max-width: 500px;
 }
 
 .container h2 {

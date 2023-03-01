@@ -23,16 +23,13 @@ function LoginAndRegister() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { user, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setError("");
-  }, [window.location.pathname]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -65,17 +62,23 @@ function LoginAndRegister() {
       return;
     }
 
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
 
-        console.log(user);
-
+        // add user to database and create some default categories
         async function addUserToDb() {
           const docRef = await setDoc(doc(db, "users", user.uid), {
             firstName,
-            lastName
+            lastName,
+            categories: ["Game", "Movie", "TV-Show"]
           });
 
           return docRef;
@@ -97,17 +100,14 @@ function LoginAndRegister() {
           setError("Oops... Something went wrong! Please try again later.");
         }
 
+        setLoading(false);
+
         console.log(errorCode, errorMessage);
       });
   }
 
   return (
     <div className={styles.container}>
-      <h2>
-        Due to the developer (me) being on the spark plan of firebase, and just
-        generally being poor, new sign-ups are not allowed. Please contact me
-        for a new account if you want to mess around with this app.
-      </h2>
       <form className={styles.form}>
         <input
           type="text"
@@ -140,12 +140,22 @@ function LoginAndRegister() {
           }}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           value={password}
           required
           onChange={(e) => {
             setPassword(e.target.value);
+            setError("");
+          }}
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          required
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
             setError("");
           }}
         />

@@ -91,7 +91,7 @@ function Home() {
 
   return (
     <>
-      {user.uid && (
+      {user.uid && user.favorites.length !== 0 && (
         <>
           <div className={styles.customSelectsContainer}>
             <OrderByCustomSelect />
@@ -111,30 +111,37 @@ function Home() {
           </div>
         </>
       )}
-      {user.uid &&
-        user.favorites.length !== 0 &&
-        user.favorites.length < user.totalFavoritesCount && (
-          <button
-            className={`btn ${styles.loadMoreBtn}`}
-            onClick={fetchMoreDocs}
-          >
-            Load More
-          </button>
-        )}
       {/* if the user is logged in and did not add any favorites yet */}
-      {user.uid && user?.favorites.length === 0 && (
+      {user.uid && user.favorites.length === 0 && (
         <div className={styles.feelsEmptyContainer}>
           <p>Feels empty in here...</p>
-          <Link className={styles.createBtn} to="/create">
-            <span className="material-icons">add_circle</span>
+          <Link to="/create">
+            <span className={`material-icons ${styles.createBtn}`}>
+              add_circle
+            </span>
           </Link>
         </div>
       )}
+      {/* if more favorites can be loaded */}
+      {user.uid && user.favorites.length < user.totalFavoritesCount && (
+        <button className={`btn ${styles.loadMoreBtn}`} onClick={fetchMoreDocs}>
+          Load More
+        </button>
+      )}
       {/* if the user is not yet logged in */}
       {!user.uid && (
-        <Link className={`btn ${styles.loginBtn}`} to="/login">
-          Login
-        </Link>
+        <div className={styles.loginRegisterContainer}>
+          <h2>
+            Keep track of your favorite movies, tv-show, games, and more!
+            Sign-up today!
+          </h2>
+          <Link className={`btn ${styles.loginBtn}`} to="/login">
+            Login
+          </Link>
+          <Link className={`btn ${styles.loginBtn}`} to="/register">
+            Register
+          </Link>
+        </div>
       )}
     </>
   );

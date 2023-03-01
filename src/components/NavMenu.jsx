@@ -61,7 +61,7 @@ function NavMenu({ flipModal }) {
                 flipModal();
               }}
             >
-              Create New Favorite
+              Create
             </Link>
           </li>
         )}

@@ -8,17 +8,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
 }
 
 .container {
-  position: relative;
   margin: 1rem;
   padding: 1rem;
   background-color: var(--primary-color-v);
   color: var(--secondary-color-v);
   border-radius: 12px;
-  z-index: 2;
 }
 
 .container .editForm {

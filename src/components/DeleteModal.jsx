@@ -42,7 +42,12 @@ function DeleteModal({ favorite, setDeleteModal }) {
 
   return (
     <>
-      <div className={styles.underlay}></div>
+      <div
+        className={styles.underlay}
+        onClick={() => {
+          setDeleteModal(false);
+        }}
+      ></div>
       <div className={styles.confirmationModalContainer}>
         <p>Are you sure?</p>
         <button

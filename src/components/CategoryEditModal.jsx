@@ -42,8 +42,6 @@ function CategoryEditModal({ category: cat, setEditModal, setItems }) {
         onClick={(e) => {
           if (e.target === e.currentTarget) {
             setEditModal(false);
-          } else {
-            e.stopPropagation();
           }
         }}
       >
